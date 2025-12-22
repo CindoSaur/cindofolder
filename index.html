@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cindofolder</title>
+
+    <!-- CSS chính của trang profile -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <!-- PAGE WRAPPER: bọc toàn bộ trang -->
+    <div class="page-wrapper">
+        <div class="container">
+
+            <!-- HEADER: tiêu đề trang -->
+            <header class="site-header">
+                <h1>Welcome to my space</h1>
+                <p>This is a simple page about myself.</p>
+            </header>
+
+            <!-- MAIN LAYOUT: chia 2 cột (sidebar + nội dung) -->
+            <main class="layout">
+                <!-- SIDEBAR: avatar nhỏ + info kiểu CV -->
+                <aside class="sidebar">
+                    <div class="sidebar-inner sidebar-cv">
+
+                        <!-- AVATAR: ảnh tròn, không nền màu -->
+                        <div class="avatar">
+                            <!-- ĐỔI đường dẫn ảnh avatar ở đây -->
+                            <img src="images/Interact.png" alt="My avatar">
+                        </div>
+
+                        <!-- THÔNG TIN BẢN THÂN -->
+                        <h1 class="cv-name">
+                            Cindo <span class="cv-lastname">- Nghia</span>
+                        </h1>
+                        <p class="cv-subtitle">I’m just a student</p>
+
+                        <hr class="cv-divider">
+
+                        <p class="cv-intro">
+                            hi, i’m Cindo, a developer and dictionary, i…
+                        </p>
+                        <ul class="cv-list">
+                            <li>write the Haiku</li>
+                            <li>create website</li>
+                            <li>create game</li>
+                        </ul>
+                        <p class="cv-intro">
+                            interest to yapping with me? send me an email at
+                            <a href="mailto:gglau223@gmail.com">gglau223@gmail.com</a> ! :D
+                        </p>
+
+                        <h2 class="cv-section-title">EDUCATION</h2>
+                        <p class="cv-edu-main">FPT Polytechnic</p>
+                        <p class="cv-edu-sub">accept 2025</p>
+
+                        <h2 class="cv-section-title">Other interest</h2>
+                        <ul class="cv-list">
+                            <li>game development</li>
+                            <li>manga/light novel</li>
+                            <li>yapping</li>
+                            <li>drawing</li>
+                        </ul>
+
+                        <h2 class="cv-section-title">Language Proficiency</h2>
+                        <div class="cv-lang-box">
+                            <p>i have native fluency in English and can speak conversational VietNam</p>
+                            <p class="cv-lang-note">
+                                i speak little bit of Japanese, but i still use that to make Haiku
+                            </p>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- CỘT PHẢI: Overview + Links -->
+                <section class="main-column">
+                    <!-- Ô trên: Overview -->
+                    <div class="top-bar">
+                        <h2>Overview</h2>
+                    </div>
+
+                    <div class="content">
+                        <h3>About me</h3>
+                        <p>I love drawing and building small interactive web projects.</p>
+                        <p>This page is a personal layout demo that matches the style of my main drawing website.</p>
+                    </div>
+
+                    <!-- Ô dưới: Links (các nút dẫn đi web khác) -->
+                    <div class="top-bar">
+                        <h2>Links</h2>
+                    </div>
+
+                    <div class="content">
+                        <h3>Quick links</h3>
+                        <p>Click a card to visit my sites. Discord is coming soon.</p>
+
+                        <!-- DANH SÁCH NÚT LINK -->
+                        <div class="action-cards">
+                            <!-- Nút 1: Web vẽ Cindodraw -->
+                            <a class="action-card" href="https://cindosaur.github.io/cindodraw/" target="_blank"
+                                rel="noopener noreferrer">
+                                <img src="images/Interact.png" alt="Drawing website">
+                                <p>Drawing Website</p>
+                            </a>
+
+                            <!-- Nút 2: Discord – Coming soon (chỉ hiện popup) -->
+                            <a class="action-card coming-soon-link" href="https://discord.gg/RxeYqc5H" target="_blank"
+                                rel="noopener noreferrer" data-coming-soon="true">
+                                <img src="images/Discord.png" alt="Discord server">
+                                <p>Discord</p>
+                            </a>
+
+                            <a class="action-card coming-soon-link" href="#" data-coming-soon="true">
+                                <img src="images/CommingSoon.png" alt="Coming soon">
+                                <p>Coming soon</p>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- FOOTER -->
+            <footer class="site-footer">
+                <p>&copy; 2025 Cindo</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- MODAL: thông báo Coming Soon cho Discord -->
+    <div id="comingSoonModal" class="modal-coming">
+        <div class="modal-coming-box">
+            <span class="modal-coming-close">&times;</span>
+            <h2>Coming soon</h2>
+            <p>I will add more websites and my Discord server here in the future.</p>
+        </div>
+    </div>
+
+    <!-- JS xử lý popup Coming Soon -->
+    <script src="main.js"></script>
+</body>
+
+</html>
