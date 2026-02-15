@@ -1,146 +1,334 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cindofolder</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cindofolder</title>
 
-    <!-- CSS chính của trang profile -->
-    <link rel="stylesheet" href="style.css" />
+  <!-- CSS chính -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Font Awesome icons -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer" />
 </head>
 
 <body>
-    <!-- PAGE WRAPPER: bọc toàn bộ trang -->
-    <div class="page-wrapper">
-        <div class="container">
+  <div class="page-wrapper">
+    <div class="container">
+      <header class="site-header">
+        <h1>Welcome to my space</h1>
+        <p>This is a simple page about myself.</p>
+      </header>
 
-            <!-- HEADER: tiêu đề trang -->
-            <header class="site-header">
-                <h1>Welcome to my space</h1>
-                <p>This is a simple page about myself.</p>
-            </header>
+      <main class="layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+          <div class="sidebar-inner sidebar-cv">
+            <div class="avatar">
+              <img src="images/Interact.png" alt="My avatar" />
+            </div>
 
-            <!-- MAIN LAYOUT: chia 2 cột (sidebar + nội dung) -->
-            <main class="layout">
-                <!-- SIDEBAR: avatar nhỏ + info kiểu CV -->
-                <aside class="sidebar">
-                    <div class="sidebar-inner sidebar-cv">
+            <h1 class="cv-name">
+              Cindo <span class="cv-lastname">- Nghia</span>
+            </h1>
+            <p class="cv-subtitle">I’m just a student</p>
 
-                        <!-- AVATAR: ảnh tròn, không nền màu -->
-                        <div class="avatar">
-                            <!-- ĐỔI đường dẫn ảnh avatar ở đây -->
-                            <img src="images/Interact.png" alt="My avatar">
-                        </div>
+            <hr class="cv-divider" />
 
-                        <!-- THÔNG TIN BẢN THÂN -->
-                        <h1 class="cv-name">
-                            Cindo <span class="cv-lastname">- Nghia</span>
-                        </h1>
-                        <p class="cv-subtitle">I’m just a student</p>
+            <p class="cv-intro">
+              hi, i’m Cindo, a developer and dictionary, i…
+            </p>
+            <ul class="cv-list">
+              <li>write the Haiku</li>
+              <li>create website</li>
+              <li>create game</li>
+            </ul>
 
-                        <hr class="cv-divider">
+            <p class="cv-intro">
+              interest to yapping with me? send me an email at
+              <a href="mailto:gglau223@gmail.com">gglau223@gmail.com</a> !
+            </p>
 
-                        <p class="cv-intro">
-                            hi, i’m Cindo, a developer and dictionary, i…
-                        </p>
-                        <ul class="cv-list">
-                            <li>write the Haiku</li>
-                            <li>create website</li>
-                            <li>create game</li>
-                        </ul>
-                        <p class="cv-intro">
-                            interest to yapping with me? send me an email at
-                            <a href="mailto:gglau223@gmail.com">gglau223@gmail.com</a> ! :D
-                        </p>
+            <h2 class="cv-section-title">EDUCATION</h2>
+            <p class="cv-edu-main">FPT Polytechnic</p>
+            <p class="cv-edu-sub">accept 2025</p>
 
-                        <h2 class="cv-section-title">EDUCATION</h2>
-                        <p class="cv-edu-main">FPT Polytechnic</p>
-                        <p class="cv-edu-sub">accept 2025</p>
+            <h2 class="cv-section-title">Other interest</h2>
+            <ul class="cv-list">
+              <li>game development</li>
+              <li>manga/light novel</li>
+              <li>yapping</li>
+              <li>drawing</li>
+            </ul>
 
-                        <h2 class="cv-section-title">Other interest</h2>
-                        <ul class="cv-list">
-                            <li>game development</li>
-                            <li>manga/light novel</li>
-                            <li>yapping</li>
-                            <li>drawing</li>
-                        </ul>
+            <h2 class="cv-section-title">Language Proficiency</h2>
+            <div class="cv-lang-box">
+              <p>
+                i have native fluency in English and can speak conversational VietNam
+              </p>
+              <p class="cv-lang-note">
+                i speak little bit of Japanese, but i still use that to make Haiku
+              </p>
+            </div>
+          </div>
+        </aside>
 
-                        <h2 class="cv-section-title">Language Proficiency</h2>
-                        <div class="cv-lang-box">
-                            <p>i have native fluency in English and can speak conversational VietNam</p>
-                            <p class="cv-lang-note">
-                                i speak little bit of Japanese, but i still use that to make Haiku
-                            </p>
-                        </div>
-                    </div>
-                </aside>
+        <!-- MAIN COLUMN -->
+        <section class="main-column">
+          <!-- OVERVIEW -->
+          <div class="top-bar">
+            <h2>Overview</h2>
+          </div>
 
-                <!-- CỘT PHẢI: Overview + Links -->
-                <section class="main-column">
-                    <!-- Ô trên: Overview -->
-                    <div class="top-bar">
-                        <h2>Overview</h2>
-                    </div>
+          <div class="content" style="position:relative; padding-bottom:40px;">
+            <h3>About me</h3>
+            <p>I love drawing and building small interactive web projects.</p>
+            <p>
+              This page is a personal layout demo that matches the style of my
+              main drawing website.
+            </p>
 
-                    <div class="content">
-                        <h3>About me</h3>
-                        <p>I love drawing and building small interactive web projects.</p>
-                        <p>This page is a personal layout demo that matches the style of my main drawing website.</p>
-                    </div>
+            <a href="#" id="aboutMoreBtn"
+              style="position:absolute; bottom:10px; right:10px; cursor:pointer;">
+              more
+            </a>
+          </div>
 
-                    <!-- Ô dưới: Links (các nút dẫn đi web khác) -->
-                    <div class="top-bar">
-                        <h2>Links</h2>
-                    </div>
+          <!-- LINKS -->
+          <div class="top-bar">
+            <h2>Links</h2>
+          </div>
 
-                    <div class="content">
-                        <h3>Quick links</h3>
-                        <p>Click a card to visit my sites.</p>
+          <div class="content">
+            <h3>Quick links</h3>
+            <p>Click a card to open more options.</p>
 
-                        <!-- DANH SÁCH NÚT LINK -->
-                        <div class="action-cards">
-                            <!-- Nút 1: Web vẽ Cindodraw -->
-                            <a class="action-card" href="https://cindosaur.github.io/cindodraw/" target="_blank"
-                                rel="noopener noreferrer">
-                                <img src="images/DrawWeb.png" alt="Drawing website">
-                                <p>Drawing Website</p>
-                            </a>
+            <!-- Quick links dùng icon không background -->
+            <div class="action-cards">
+              <a class="action-card nav-card" href="#" data-modal="webModal">
+                <i class="fa-solid fa-globe"></i>
+                <p>Web</p>
+              </a>
 
-                            <!-- Nút 2: Discord – Coming soon (chỉ hiện popup) -->
-                            <a class="action-card coming-soon-link" href="https://discord.gg/RxeYqc5H" target="_blank"
-                                rel="noopener noreferrer" data-coming-soon="true">
-                                <img src="images/Discord.png" alt="Discord server">
-                                <p>Discord</p>
-                            </a>
+              <a class="action-card nav-card" href="#" data-modal="followModal">
+                <i class="fa-solid fa-user-group"></i>
+                <p>Follow</p>
+              </a>
 
-                            <a class="action-card coming-soon-link" href="#" data-coming-soon="true">
-                                <img src="images/CommingSoon.png" alt="Coming soon">
-                                <p>Coming soon</p>
-                            </a>
-                        </div>
-                    </div>
-                </section>
-            </main>
+              <a class="action-card nav-card" href="#" data-modal="projectModal">
+                <i class="fa-solid fa-folder-open"></i>
+                <p>Project</p>
+              </a>
 
-            <!-- FOOTER -->
-            <footer class="site-footer">
-                <p>&copy; 2025 Cindo</p>
-            </footer>
-        </div>
+              <a class="action-card nav-card" href="#" data-modal="contactModal">
+                <i class="fa-solid fa-envelope"></i>
+                <p>Contact</p>
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Thanks for visiting my website :D</p>
+      </footer>
     </div>
+  </div>
 
-    <!-- MODAL: thông báo Coming Soon cho Discord -->
-    <div id="comingSoonModal" class="modal-coming">
-        <div class="modal-coming-box">
-            <span class="modal-coming-close">&times;</span>
-            <h2>Coming soon</h2>
-            <p>I will add more websites and my Discord server here in the future.</p>
+  <!-- WORK MODAL -->
+  <div id="workModal" class="modal-work">
+    <div class="modal-work-container">
+
+      <div class="modal-work-header">
+        <span>work</span>
+        <span class="modal-work-close">[ x ]</span>
+      </div>
+
+      <div class="modal-work-body">
+
+        <div class="work-notice">
+          <strong>
+            Accepting work offers via my
+            <a href="mailto:gglau223@gmail.com">work email</a>.
+          </strong>
+          <p>I do illustration, web design, and web/app development. :D</p>
         </div>
-    </div>
 
-    <!-- JS xử lý popup Coming Soon -->
-    <script src="main.js"></script>
+        <div class="work-grid">
+          <div>
+            <h3>TOOLS</h3>
+            <div class="tag-container">
+              <span class="tag">Visual Studio Code</span>
+              <span class="tag">Eclipse</span>
+              <span class="tag">Krita</span>
+              <span class="tag">Unity 2D/3D</span>
+              <span class="tag">SQL Server Management Studio</span>
+              <span class="tag">Figma</span>
+            </div>
+          </div>
+
+          <div>
+            <h3>DEVELOPMENT</h3>
+            <div class="tag-container">
+              <span class="tag">C#</span>
+              <span class="tag">C++</span>
+              <span class="tag">Python</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Java</span>
+              <span class="tag">HTML/CSS</span>
+              <span class="tag">React</span>
+              <span class="tag">Node.js</span>
+              <span class="tag">Vue.js</span>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="my-draw">
+          <h2>MY DRAW</h2>
+          <div class="draw-gallery">
+            <img src="https://cindosaur.github.io/cindodraw/images/PIC12.png" alt="Artwork 1">
+            <img src="https://cindosaur.github.io/cindodraw/images/PIC10.png" alt="Artwork 2">
+            <img src="https://cindosaur.github.io/cindodraw/images/PIC11.png" alt="Artwork 3">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV MODAL: WEB -->
+  <div id="webModal" class="modal-nav">
+    <div class="modal-nav-container">
+      <div class="modal-nav-header">
+        <span>web</span>
+        <span class="modal-nav-close">[ x ]</span>
+      </div>
+      <div class="modal-nav-body">
+        <div class="work-notice nav-notice">
+          <p>Places where you can see my websites and layouts.</p>
+        </div>
+        <div class="icon-grid">
+          <div class="icon-item" data-link="https://cindosaur.github.io/cindodraw/">
+            <i class="fa-solid fa-globe"></i>
+            <span>Main drawing site</span>
+          </div>
+          <div class="icon-item" data-link="#">
+            <i class="fa-solid fa-palette"></i>
+            <span>Art gallery</span>
+          </div>
+          <div class="icon-item" data-link="#">
+            <i class="fa-solid fa-link"></i>
+            <span>Other layouts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV MODAL: FOLLOW -->
+  <div id="followModal" class="modal-nav">
+    <div class="modal-nav-container">
+      <div class="modal-nav-header">
+        <span>follow</span>
+        <span class="modal-nav-close">[ x ]</span>
+      </div>
+      <div class="modal-nav-body">
+        <div class="work-notice nav-notice">
+          <p>Follow me on these platforms.</p>
+        </div>
+        <div class="icon-grid">
+          <div class="icon-item" data-link="https://github.com/CindoSaur">
+            <i class="fa-brands fa-github"></i>
+            <span>GitHub</span>
+          </div>
+          <div class="icon-item" data-link="https://x.com/cindo_ee">
+            <i class="fa-brands fa-x-twitter"></i>
+            <span>Twitter / X</span>
+          </div>
+          <div class="icon-item" data-link="https://www.instagram.com/cind0_ee/">
+            <i class="fa-brands fa-instagram"></i>
+            <span>Instagram</span>
+          </div>
+          <div class="icon-item" data-link="https://www.facebook.com/minh.nghia.946508">
+            <i class="fa-brands fa-facebook-f"></i>
+            <span>Facebook</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV MODAL: PROJECT -->
+  <div id="projectModal" class="modal-nav">
+    <div class="modal-nav-container">
+      <div class="modal-nav-header">
+        <span>project</span>
+        <span class="modal-nav-close">[ x ]</span>
+      </div>
+      <div class="modal-nav-body">
+        <div class="work-notice nav-notice">
+          <p>Some of my little games and web projects.</p>
+        </div>
+        <div class="icon-grid">
+          <div class="icon-item" data-link="#">
+            <i class="fa-solid fa-gamepad"></i>
+            <span>Game project 1</span>
+          </div>
+          <div class="icon-item" data-link="#">
+            <i class="fa-solid fa-code"></i>
+            <span>Web tool 2</span>
+          </div>
+          <div class="icon-item" data-link="#">
+            <i class="fa-solid fa-flask"></i>
+            <span>Experiment 3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV MODAL: CONTACT -->
+  <div id="contactModal" class="modal-nav">
+    <div class="modal-nav-container">
+      <div class="modal-nav-header">
+        <span>contact</span>
+        <span class="modal-nav-close">[ x ]</span>
+      </div>
+      <div class="modal-nav-body">
+        <div class="work-notice nav-notice">
+          <p>Feel free to contact me here.</p>
+        </div>
+        <div class="icon-grid">
+          <div class="icon-item" data-link="mailto:gglau223@gmail.com">
+            <i class="fa-solid fa-envelope"></i>
+            <span>Email</span>
+          </div>
+          <div class="icon-item" data-link="https://discord.gg/hDdx2fcuNy">
+            <i class="fa-brands fa-discord"></i>
+            <span>Discord</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMAGE PREVIEW -->
+  <div id="imagePreview" class="image-preview">
+    <span class="image-preview-close">&times;</span>
+    <img id="previewImg" src="" alt="Preview">
+  </div>
+
+  <!-- SOUND -->
+  <audio id="closeSound"
+    src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+  <audio id="openSound"
+    src="https://www.soundjay.com/buttons/sounds/button-09.mp3"></audio>
+
+  <script src="script.js"></script>
 </body>
-
 </html>
