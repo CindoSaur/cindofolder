@@ -243,7 +243,8 @@ body {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.action-card i {
+.action-card i,
+.action-card .material-symbols-rounded {
   font-size: 32px;
   color: #e9f3ff;
   margin-bottom: 8px;
@@ -527,7 +528,8 @@ body {
   text-align: center;
 }
 
-.icon-item i {
+.icon-item i,
+.icon-item .material-symbols-rounded {
   font-size: 22px;
   color: #e9f3ff;
 }

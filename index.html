@@ -5,14 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>cindofolder</title>
 
-  <!-- CSS chính -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Font Awesome icons -->
+  <!-- Google Material Symbols -->
   <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer" />
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <style>
+    .material-symbols-rounded {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      line-height: 1;
+      vertical-align: middle;
+      color: #e9f3ff;
+    }
+  </style>
 </head>
 
 <body>
@@ -34,12 +39,12 @@
             <h1 class="cv-name">
               Cindo <span class="cv-lastname">- Nghia</span>
             </h1>
-            <p class="cv-subtitle">I’m just a student</p>
+            <p class="cv-subtitle">I'm just a student</p>
 
             <hr class="cv-divider" />
 
             <p class="cv-intro">
-              hi, i’m Cindo, a developer and dictionary, i…
+              hi, i'm Cindo, a developer and dictionary, i...
             </p>
             <ul class="cv-list">
               <li>write the Haiku</li>
@@ -78,7 +83,6 @@
 
         <!-- MAIN COLUMN -->
         <section class="main-column">
-          <!-- OVERVIEW -->
           <div class="top-bar">
             <h2>Overview</h2>
           </div>
@@ -90,14 +94,12 @@
               This page is a personal layout demo that matches the style of my
               main drawing website.
             </p>
-
             <a href="#" id="aboutMoreBtn"
               style="position:absolute; bottom:10px; right:10px; cursor:pointer;">
               more
             </a>
           </div>
 
-          <!-- LINKS -->
           <div class="top-bar">
             <h2>Links</h2>
           </div>
@@ -106,25 +108,21 @@
             <h3>Quick links</h3>
             <p>Click a card to open more options.</p>
 
-            <!-- Quick links dùng icon không background -->
             <div class="action-cards">
               <a class="action-card nav-card" href="#" data-modal="webModal">
-                <i class="fa-solid fa-globe"></i>
+                <span class="material-symbols-rounded" style="font-size:32px;margin-bottom:8px;">language</span>
                 <p>Web</p>
               </a>
-
               <a class="action-card nav-card" href="#" data-modal="followModal">
-                <i class="fa-solid fa-user-group"></i>
+                <span class="material-symbols-rounded" style="font-size:32px;margin-bottom:8px;">group</span>
                 <p>Follow</p>
               </a>
-
               <a class="action-card nav-card" href="#" data-modal="projectModal">
-                <i class="fa-solid fa-folder-open"></i>
+                <span class="material-symbols-rounded" style="font-size:32px;margin-bottom:8px;">folder_open</span>
                 <p>Project</p>
               </a>
-
               <a class="action-card nav-card" href="#" data-modal="contactModal">
-                <i class="fa-solid fa-envelope"></i>
+                <span class="material-symbols-rounded" style="font-size:32px;margin-bottom:8px;">mail</span>
                 <p>Contact</p>
               </a>
             </div>
@@ -141,14 +139,11 @@
   <!-- WORK MODAL -->
   <div id="workModal" class="modal-work">
     <div class="modal-work-container">
-
       <div class="modal-work-header">
         <span>work</span>
         <span class="modal-work-close">[ x ]</span>
       </div>
-
       <div class="modal-work-body">
-
         <div class="work-notice">
           <strong>
             Accepting work offers via my
@@ -156,7 +151,6 @@
           </strong>
           <p>I do illustration, web design, and web/app development. :D</p>
         </div>
-
         <div class="work-grid">
           <div>
             <h3>TOOLS</h3>
@@ -169,7 +163,6 @@
               <span class="tag">Figma</span>
             </div>
           </div>
-
           <div>
             <h3>DEVELOPMENT</h3>
             <div class="tag-container">
@@ -185,9 +178,7 @@
             </div>
           </div>
         </div>
-
         <br>
-
         <div class="my-draw">
           <h2>MY DRAW</h2>
           <div class="draw-gallery">
@@ -196,7 +187,6 @@
             <img src="https://cindosaur.github.io/cindodraw/images/PIC11.png" alt="Artwork 3">
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -214,14 +204,19 @@
         </div>
         <div class="icon-grid">
           <div class="icon-item" data-link="https://cindosaur.github.io/cindodraw/">
-            <i class="fa-solid fa-globe"></i>
+            <span class="material-symbols-rounded" style="font-size:22px;">palette</span>
             <span>Draw</span>
+          </div>
+          <div class="icon-item" data-link="https://cindosaur.github.io/cindo-s-haiku-garden/">
+            <span class="material-symbols-rounded" style="font-size:22px;">eco</span>
+            <span>Haiku Garden</span>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- NAV MODAL: FOLLOW -->
   <div id="followModal" class="modal-nav">
     <div class="modal-nav-container">
       <div class="modal-nav-header">
@@ -234,19 +229,19 @@
         </div>
         <div class="icon-grid">
           <div class="icon-item" data-link="https://github.com/CindoSaur">
-            <i class="fa-brands fa-github"></i>
+            <span class="material-symbols-rounded" style="font-size:22px;">code</span>
             <span>GitHub</span>
           </div>
           <div class="icon-item" data-link="https://x.com/cindo_ee">
-            <i class="fa-brands fa-x-twitter"></i>
+            <span class="material-symbols-rounded" style="font-size:22px;">close</span>
             <span>Twitter / X</span>
           </div>
           <div class="icon-item" data-link="https://www.instagram.com/cind0_ee/">
-            <i class="fa-brands fa-instagram"></i>
+            <span class="material-symbols-rounded" style="font-size:22px;">photo_camera</span>
             <span>Instagram</span>
           </div>
           <div class="icon-item" data-link="https://www.facebook.com/minh.nghia.946508">
-            <i class="fa-brands fa-facebook-f"></i>
+            <span class="material-symbols-rounded" style="font-size:22px;">thumb_up</span>
             <span>Facebook</span>
           </div>
         </div>
@@ -267,15 +262,15 @@
         </div>
         <div class="icon-grid">
           <div class="icon-item" data-link="#">
-            <i class="fa-solid fa-gamepad"></i>
+            <span class="material-symbols-rounded" style="font-size:22px;">sports_esports</span>
             <span>Game project 1</span>
           </div>
           <div class="icon-item" data-link="#">
-            <i class="fa-solid fa-code"></i>
+            <span class="material-symbols-rounded" style="font-size:22px;">terminal</span>
             <span>Web tool 2</span>
           </div>
           <div class="icon-item" data-link="#">
-            <i class="fa-solid fa-flask"></i>
+            <span class="material-symbols-rounded" style="font-size:22px;">science</span>
             <span>Experiment 3</span>
           </div>
         </div>
@@ -296,11 +291,11 @@
         </div>
         <div class="icon-grid">
           <div class="icon-item" data-link="mailto:gglau223@gmail.com">
-            <i class="fa-solid fa-envelope"></i>
+            <span class="material-symbols-rounded" style="font-size:22px;">mail</span>
             <span>Email</span>
           </div>
           <div class="icon-item" data-link="https://discord.gg/hDdx2fcuNy">
-            <i class="fa-brands fa-discord"></i>
+            <span class="material-symbols-rounded" style="font-size:22px;">forum</span>
             <span>Discord</span>
           </div>
         </div>
@@ -315,10 +310,8 @@
   </div>
 
   <!-- SOUND -->
-  <audio id="closeSound"
-    src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
-  <audio id="openSound"
-    src="https://www.soundjay.com/buttons/sounds/button-09.mp3"></audio>
+  <audio id="closeSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+  <audio id="openSound" src="https://www.soundjay.com/buttons/sounds/button-09.mp3"></audio>
 
   <script src="script.js"></script>
 </body>
