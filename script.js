@@ -1,186 +1,438 @@
+/* ============================================================
+   Y2K PIXEL WINDOW MANAGER — script.js
+   ============================================================ */
+
+/* ── SOUND ─────────────────────────────────────────────── */
+const openSound  = new Audio("sound/iceberguser.mp3");
 const closeSound = new Audio("sound/iceberguser.mp3");
+openSound.volume  = 0.2;
 closeSound.volume = 0.1;
+function playOpen()  { try { openSound.currentTime  = 0; openSound.play();  } catch(e){} }
+function playClose() { try { closeSound.currentTime = 0; closeSound.play(); } catch(e){} }
 
-const openSound = new Audio("sound/iceberguser.mp3");
-openSound.volume = 0.2;
+/* ── STAR CANVAS ───────────────────────────────────────── */
+(function initStars() {
+  const canvas = document.getElementById("starCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const COLORS = ["#ff00ff","#00ffff","#ffff00","#ffffff","#ff88ff"];
+  let stars = [], W, H, frame = 0;
 
-/* WORK MODAL */
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function createStar() {
+    return { x: Math.random()*W, y: Math.random()*H, size: Math.random()<0.6?2:4,
+             color: COLORS[Math.floor(Math.random()*COLORS.length)],
+             alpha: Math.random(), speed: 0.005+Math.random()*0.01, phase: Math.random()*Math.PI*2 };
+  }
+  function draw() {
+    ctx.clearRect(0,0,W,H); frame++;
+    stars.forEach(s => {
+      s.alpha = 0.2+0.8*Math.abs(Math.sin(s.phase+frame*s.speed));
+      ctx.globalAlpha = s.alpha; ctx.fillStyle = s.color;
+      ctx.fillRect(Math.floor(s.x), Math.floor(s.y), s.size, s.size);
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
+  }
+  resize();
+  for (let i=0;i<80;i++) stars.push(createStar());
+  draw();
+  window.addEventListener("resize", () => { resize(); stars = []; for(let i=0;i<80;i++) stars.push(createStar()); });
+})();
+
+/* ── PIXEL CLICK BURST ─────────────────────────────────── */
+(function initBurst() {
+  const COLORS = ["#ff00ff","#00ffff","#ffff00","#ff4488","#00ff88"];
+  document.addEventListener("click", (e) => {
+    for (let i=0; i<8; i++) {
+      const px = document.createElement("div");
+      const angle = (i/8)*360;
+      const dist  = 28 + Math.random()*18;
+      const size  = Math.random()<0.5 ? 4 : 6;
+      Object.assign(px.style, {
+        position:"fixed", left:e.clientX+"px", top:e.clientY+"px",
+        width:size+"px", height:size+"px",
+        background: COLORS[Math.floor(Math.random()*COLORS.length)],
+        pointerEvents:"none", zIndex:"9997", transition:"all 0.45s ease-out",
+        transform:"translate(-50%,-50%)",
+      });
+      document.body.appendChild(px);
+      requestAnimationFrame(() => {
+        const rad = (angle*Math.PI)/180;
+        px.style.transform = `translate(calc(-50% + ${Math.cos(rad)*dist}px), calc(-50% + ${Math.sin(rad)*dist}px))`;
+        px.style.opacity = "0";
+      });
+      setTimeout(() => px.remove(), 480);
+    }
+  });
+})();
+
+/* ── GLITCH HEADER ─────────────────────────────────────── */
+(function glitchType() {
+  const el = document.querySelector(".site-header h1");
+  if (!el) return;
+  const original = el.textContent;
+  const chars = "█▓▒░#@&%?!01";
+  let timeout;
+  el.addEventListener("mouseenter", () => {
+    let iter = 0;
+    clearInterval(timeout);
+    timeout = setInterval(() => {
+      el.textContent = original.split("").map((ch,i) => {
+        if (i < iter) return original[i];
+        if (ch===" ") return " ";
+        return chars[Math.floor(Math.random()*chars.length)];
+      }).join("");
+      iter += 1.5;
+      if (iter >= original.length) { el.textContent = original; clearInterval(timeout); }
+    }, 40);
+  });
+})();
+
+/* ============================================================
+   WINDOW MANAGER
+   ============================================================ */
+
+let zCounter = 200; // base z-index for windows
+
+const windowRegistry = {}; // id → { el, taskbarBtn, minimized, maximized, prevRect }
+
+/* --- TASKBAR CLOCK --- */
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,"0");
+  const m = String(now.getMinutes()).padStart(2,"0");
+  const d = String(now.getDate()).padStart(2,"0");
+  const mo = String(now.getMonth()+1).padStart(2,"0");
+  const el_t = document.getElementById("taskbar-time");
+  const el_d = document.getElementById("taskbar-date");
+  if (el_t) el_t.textContent = `${h}:${m}`;
+  if (el_d) el_d.textContent = `${d}/${mo}`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+/* --- REGISTER ALL WINDOWS --- */
+function registerAllWindows() {
+  document.querySelectorAll(".win").forEach(win => {
+    const id = win.id;
+    if (!id) return;
+
+    // Find label from title bar
+    const titleEl = win.querySelector(".win-title");
+    const iconEl  = win.querySelector(".win-icon");
+    const label = titleEl ? titleEl.textContent.split("—")[0].trim() : id;
+    const icon  = iconEl  ? iconEl.textContent : "🖥";
+
+    // Create taskbar button
+    const btn = document.createElement("button");
+    btn.className = "taskbar-btn";
+    btn.innerHTML = `<span class="tb-icon">${icon}</span>${label.replace(".EXE","").trim()}`;
+    btn.dataset.win = id;
+    btn.style.display = "none"; // hidden until window opens
+    btn.addEventListener("click", () => taskbarBtnClick(id));
+    document.getElementById("taskbar-btns").appendChild(btn);
+
+    windowRegistry[id] = { el: win, taskbarBtn: btn, minimized: false, maximized: false, prevRect: null };
+
+    // Close / minimize / maximize buttons
+    win.querySelectorAll(".win-btn").forEach(b => {
+      b.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const action = b.dataset.action;
+        const winId  = b.dataset.win;
+        if (action === "close")    closeWindow(winId);
+        if (action === "minimize") minimizeWindow(winId);
+        if (action === "maximize") maximizeWindow(winId);
+      });
+    });
+
+    // Click window → bring to front
+    win.addEventListener("mousedown", () => bringToFront(id), true);
+
+    // Drag by titlebar
+    const titlebar = win.querySelector(".win-titlebar");
+    if (titlebar) makeDraggable(win, titlebar);
+
+    // Resize
+    const resizeHandle = win.querySelector(".win-resize");
+    if (resizeHandle) makeResizable(win, resizeHandle);
+  });
+}
+
+/* --- OPEN WINDOW --- */
+function openWindow(id) {
+  const reg = windowRegistry[id];
+  if (!reg) return;
+  const win = reg.el;
+
+  playOpen();
+
+  if (reg.minimized) {
+    // un-minimize
+    win.classList.remove("minimized");
+    reg.minimized = false;
+    reg.taskbarBtn.classList.add("tb-active");
+    bringToFront(id);
+    return;
+  }
+
+  if (win.classList.contains("open")) {
+    // already open — just bring to front
+    bringToFront(id);
+    return;
+  }
+
+  // Position window — CSS handles mobile via !important, JS handles desktop
+  const isMobile = window.innerWidth <= 768;
+  if (!isMobile) {
+    const offsets = {
+      winWork:    {t:80,  l:120}, winWeb:     {t:100, l:200},
+      winFollow:  {t:120, l:220}, winProject: {t:110, l:210},
+      winContact: {t:130, l:240}, winPreview: {t:60,  l:180}
+    };
+    const off = offsets[id] || {t:100, l:160};
+    const winW = parseInt(win.style.width) || 500;
+    const maxL = Math.max(0, window.innerWidth  - winW - 20);
+    const maxT = Math.max(0, window.innerHeight - 300  - 44);
+    win.style.top  = Math.min(off.t, maxT) + "px";
+    win.style.left = Math.min(off.l, maxL) + "px";
+  }
+
+  win.classList.add("open");
+  reg.taskbarBtn.style.display = "flex";
+  reg.taskbarBtn.classList.add("tb-active");
+
+  bringToFront(id);
+  updateAllTitlebars();
+}
+
+/* --- CLOSE WINDOW --- */
+function closeWindow(id) {
+  const reg = windowRegistry[id];
+  if (!reg) return;
+  const win = reg.el;
+
+  playClose();
+  win.classList.add("closing");
+  setTimeout(() => {
+    win.classList.remove("open","closing","maximized","minimized");
+    win.style.width  = "";
+    win.style.height = "";
+    reg.minimized  = false;
+    reg.maximized  = false;
+    reg.taskbarBtn.style.display = "none";
+    reg.taskbarBtn.classList.remove("tb-active");
+    updateAllTitlebars();
+  }, 160);
+}
+
+/* --- MINIMIZE WINDOW --- */
+function minimizeWindow(id) {
+  const reg = windowRegistry[id];
+  if (!reg) return;
+  playClose();
+  reg.el.classList.add("minimized");
+  reg.minimized = true;
+  reg.taskbarBtn.classList.remove("tb-active");
+  updateAllTitlebars();
+}
+
+/* --- MAXIMIZE / RESTORE WINDOW --- */
+function maximizeWindow(id) {
+  const reg = windowRegistry[id];
+  if (!reg) return;
+  const win = reg.el;
+
+  if (reg.maximized) {
+    // restore
+    win.classList.remove("maximized");
+    if (reg.prevRect) {
+      win.style.top    = reg.prevRect.top;
+      win.style.left   = reg.prevRect.left;
+      win.style.width  = reg.prevRect.width;
+      win.style.height = reg.prevRect.height;
+    }
+    reg.maximized = false;
+    // update maximize button
+    const btn = win.querySelector(".win-maximize");
+    if (btn) btn.textContent = "□";
+  } else {
+    // save current rect
+    reg.prevRect = {
+      top:    win.style.top    || "100px",
+      left:   win.style.left   || "100px",
+      width:  win.style.width  || "",
+      height: win.style.height || "",
+    };
+    win.classList.add("maximized");
+    reg.maximized = true;
+    const btn = win.querySelector(".win-maximize");
+    if (btn) btn.textContent = "❐";
+  }
+
+  bringToFront(id);
+  playOpen();
+}
+
+/* --- BRING TO FRONT --- */
+function bringToFront(id) {
+  zCounter++;
+  const reg = windowRegistry[id];
+  if (!reg) return;
+  reg.el.style.zIndex = zCounter;
+  updateAllTitlebars();
+}
+
+/* --- UPDATE TITLEBARS (active vs inactive) --- */
+function updateAllTitlebars() {
+  // find highest z
+  let topZ = 0, topId = null;
+  Object.entries(windowRegistry).forEach(([id, reg]) => {
+    const z = parseInt(reg.el.style.zIndex || 0);
+    if (reg.el.classList.contains("open") && !reg.minimized && z > topZ) {
+      topZ = z; topId = id;
+    }
+  });
+  Object.entries(windowRegistry).forEach(([id, reg]) => {
+    if (!reg.el.classList.contains("open") || reg.minimized) return;
+    if (id === topId) {
+      reg.el.classList.add("active-window");
+      reg.el.classList.remove("inactive-window");
+      reg.taskbarBtn.classList.add("tb-active");
+    } else {
+      reg.el.classList.remove("active-window");
+      reg.el.classList.add("inactive-window");
+      reg.taskbarBtn.classList.remove("tb-active");
+    }
+  });
+}
+
+/* --- TASKBAR BUTTON CLICK --- */
+function taskbarBtnClick(id) {
+  const reg = windowRegistry[id];
+  if (!reg) return;
+  if (reg.minimized) {
+    openWindow(id);
+  } else if (reg.el.classList.contains("open")) {
+    // if already active, minimize it; else bring to front
+    const topZ = Math.max(...Object.values(windowRegistry).map(r => parseInt(r.el.style.zIndex||0)));
+    if (parseInt(reg.el.style.zIndex||0) === topZ) {
+      minimizeWindow(id);
+    } else {
+      bringToFront(id);
+    }
+  }
+}
+
+/* --- DRAG (desktop only) --- */
+function makeDraggable(win, handle) {
+  let dragging = false, ox = 0, oy = 0;
+  handle.addEventListener("mousedown", (e) => {
+    if (window.innerWidth <= 768) return; // no drag on mobile
+    if (e.target.classList.contains("win-btn")) return;
+    dragging = true;
+    const rect = win.getBoundingClientRect();
+    ox = e.clientX - rect.left;
+    oy = e.clientY - rect.top;
+    win.style.transition = "none";
+    e.preventDefault();
+  });
+  document.addEventListener("mousemove", (e) => {
+    if (!dragging) return;
+    // clamp within viewport
+    const maxL = window.innerWidth  - win.offsetWidth;
+    const maxT = window.innerHeight - win.offsetHeight - 44;
+    win.style.left = Math.max(0, Math.min(e.clientX - ox, maxL)) + "px";
+    win.style.top  = Math.max(0, Math.min(e.clientY - oy, maxT)) + "px";
+  });
+  document.addEventListener("mouseup", () => { dragging = false; });
+}
+
+/* --- RESIZE (desktop only) --- */
+function makeResizable(win, handle) {
+  let resizing = false, startX, startY, startW, startH;
+  handle.addEventListener("mousedown", (e) => {
+    if (window.innerWidth <= 768) return;
+    resizing = true;
+    startX = e.clientX; startY = e.clientY;
+    startW = win.offsetWidth; startH = win.offsetHeight;
+    e.preventDefault(); e.stopPropagation();
+  });
+  document.addEventListener("mousemove", (e) => {
+    if (!resizing) return;
+    const newW = Math.max(300, Math.min(startW + (e.clientX - startX), window.innerWidth  - win.offsetLeft - 10));
+    const newH = Math.max(200, Math.min(startH + (e.clientY - startY), window.innerHeight - win.offsetTop  - 54));
+    win.style.width  = newW + "px";
+    win.style.height = newH + "px";
+  });
+  document.addEventListener("mouseup", () => { resizing = false; });
+}
+
+/* ── WIRE UP OPENERS ───────────────────────────────────── */
+// Action cards
+document.querySelectorAll(".action-card").forEach(card => {
+  card.addEventListener("click", (e) => {
+    e.preventDefault();
+    const winId = card.dataset.win;
+    if (winId) openWindow(winId);
+  });
+});
+
+// About More button → Work window
 const aboutMoreBtn = document.getElementById("aboutMoreBtn");
-const workModal = document.getElementById("workModal");
-const workClose = document.querySelector(".modal-work-close");
-
 if (aboutMoreBtn) {
   aboutMoreBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    openSound.currentTime = 0;
-    openSound.play();
-    workModal.classList.add("show");
+    openWindow("winWork");
   });
 }
 
-if (workClose) {
-  workClose.addEventListener("click", () => {
-    closeSound.currentTime = 0;
-    closeSound.play();
-    workModal.classList.remove("show");
-  });
-}
-
-if (workModal) {
-  workModal.addEventListener("click", (e) => {
-    if (e.target === workModal) {
-      closeSound.currentTime = 0;
-      closeSound.play();
-      workModal.classList.remove("show");
-    }
-  });
-}
-
-/* DRAG WORK MODAL */
-const modalContainer = document.querySelector(".modal-work-container");
-const modalHeader = document.querySelector(".modal-work-header");
-
-let isDragging = false;
-let offsetX = 0;
-let offsetY = 0;
-
-if (modalHeader && modalContainer) {
-  modalHeader.addEventListener("mousedown", (e) => {
-    isDragging = true;
-    offsetX = e.clientX - modalContainer.offsetLeft;
-    offsetY = e.clientY - modalContainer.offsetTop;
-    modalContainer.style.position = "absolute";
-  });
-}
-
-document.addEventListener("mousemove", (e) => {
-  if (!isDragging || !modalContainer) return;
-  modalContainer.style.left = e.clientX - offsetX + "px";
-  modalContainer.style.top = e.clientY - offsetY + "px";
-});
-
-document.addEventListener("mouseup", () => {
-  isDragging = false;
-});
-
-/* IMAGE PREVIEW */
-const galleryImgs = document.querySelectorAll(".draw-gallery img");
-const preview = document.getElementById("imagePreview");
-const previewImg = document.getElementById("previewImg");
-const previewClose = document.querySelector(".image-preview-close");
-
-galleryImgs.forEach(img => {
+// Gallery images → Preview window
+document.querySelectorAll(".draw-gallery img[data-preview]").forEach(img => {
   img.addEventListener("click", () => {
-    openSound.currentTime = 0;
-    openSound.play();
-    if (preview && previewImg) {
-      preview.style.display = "flex";
-      previewImg.src = img.src;
-    }
+    document.getElementById("previewImg").src = img.src;
+    const fname = img.src.split("/").pop();
+    const fEl = document.getElementById("previewFilename");
+    if (fEl) fEl.textContent = fname;
+    openWindow("winPreview");
   });
 });
 
-if (preview && previewClose) {
-  previewClose.addEventListener("click", () => {
-    closeSound.currentTime = 0;
-    closeSound.play();
-    preview.style.display = "none";
-  });
-
-  preview.addEventListener("click", (e) => {
-    if (e.target === preview) {
-      closeSound.currentTime = 0;
-      closeSound.play();
-      preview.style.display = "none";
-    }
-  });
-}
-
-/* NAV MODALS */
-const navCards = document.querySelectorAll(".nav-card");
-const navModals = document.querySelectorAll(".modal-nav");
-const navCloses = document.querySelectorAll(".modal-nav-close");
-
-navCards.forEach(card => {
-  card.addEventListener("click", (e) => {
-    e.preventDefault();
-    const modalId = card.dataset.modal;
-    const targetModal = document.getElementById(modalId);
-    if (targetModal) {
-      openSound.currentTime = 0;
-      openSound.play();
-      targetModal.classList.add("show");
-    }
-  });
-});
-
-navCloses.forEach(btn => {
-  btn.addEventListener("click", () => {
-    const modal = btn.closest(".modal-nav");
-    if (modal) {
-      closeSound.currentTime = 0;
-      closeSound.play();
-      modal.classList.remove("show");
-    }
-  });
-});
-
-navModals.forEach(modal => {
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      closeSound.currentTime = 0;
-      closeSound.play();
-      modal.classList.remove("show");
-    }
-  });
-});
-
-/* click icon-item (icon + text) mở link */
+// icon-item links
 document.addEventListener("click", (e) => {
-  const iconItem = e.target.closest(".icon-item");
-  if (!iconItem) return;
-  const link = iconItem.dataset.link;
-  if (link && link !== "#") {
-    window.open(link, "_blank");
-  }
+  const item = e.target.closest(".icon-item");
+  if (!item) return;
+  const link = item.dataset.link;
+  if (link && link !== "#") window.open(link, "_blank");
 });
 
-/* DRAG NAV MODALS */
-let navDragging = false;
-let navOffsetX = 0;
-let navOffsetY = 0;
-let currentNavContainer = null;
-
-const navHeaders = document.querySelectorAll(".modal-nav-header");
-
-navHeaders.forEach(header => {
-  header.addEventListener("mousedown", (e) => {
-    const container = header.parentElement;
-    if (!container) return;
-    navDragging = true;
-    currentNavContainer = container;
-    navOffsetX = e.clientX - container.offsetLeft;
-    navOffsetY = e.clientY - container.offsetTop;
-    container.style.position = "absolute";
-  });
-});
-
-document.addEventListener("mousemove", (e) => {
-  if (!navDragging || !currentNavContainer) return;
-  currentNavContainer.style.left = e.clientX - navOffsetX + "px";
-  currentNavContainer.style.top = e.clientY - navOffsetY + "px";
-});
-
-document.addEventListener("mouseup", () => {
-  navDragging = false;
-  currentNavContainer = null;
-});
-
-/* ESC CLOSE */
+/* ── ESC → close top window ───────────────────────────── */
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    if (workModal) workModal.classList.remove("show");
-    navModals.forEach(m => m.classList.remove("show"));
-    if (preview) preview.style.display = "none";
-  }
+  if (e.key !== "Escape") return;
+  // find top window
+  let topZ = 0, topId = null;
+  Object.entries(windowRegistry).forEach(([id, reg]) => {
+    const z = parseInt(reg.el.style.zIndex||0);
+    if (reg.el.classList.contains("open") && !reg.minimized && z > topZ) {
+      topZ = z; topId = id;
+    }
+  });
+  if (topId) closeWindow(topId);
 });
+
+/* ── STAGGER CARDS ─────────────────────────────────────── */
+(function staggerCards() {
+  document.querySelectorAll(".action-card").forEach((card, i) => {
+    setTimeout(() => card.classList.add("visible"), 300 + i*80);
+  });
+})();
+
+/* ── SIDEBAR SECTION HOVER ─────────────────────────────── */
+document.querySelectorAll(".cv-section-title").forEach(el => {
+  el.addEventListener("mouseenter", () => { el.style.color="#ff00ff"; el.style.borderColor="#ff00ff"; });
+  el.addEventListener("mouseleave", () => { el.style.color=""; el.style.borderColor=""; });
+});
+
+/* ── INIT ──────────────────────────────────────────────── */
+registerAllWindows();
