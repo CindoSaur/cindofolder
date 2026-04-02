@@ -5,11 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>cindofolder</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <!-- Material Symbols: preconnect + load with display=block to ensure font renders -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&display=block" />
   <style>
     .material-symbols-rounded {
+      font-family: 'Material Symbols Rounded';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      display: inline-block;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
       font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      line-height: 1; vertical-align: middle;
+      vertical-align: middle;
     }
   </style>
 </head>
@@ -22,8 +37,8 @@
     <div class="container">
 
       <header class="site-header">
-        <h1>★ WELCOME TO MY SPACE ★</h1>
-        <p>// a simple page about myself<span class="blink">_</span></p>
+        <h1 data-i18n="siteTitle">-- WELCOME TO MY SPACE --</h1>
+        <p data-i18n="siteSubtitle"> &lt;- a simple page about myself -&gt; </p>
       </header>
 
       <main class="layout">
@@ -34,68 +49,68 @@
             <div class="avatar">
               <img src="images/Interact.png" alt="My avatar" />
             </div>
-            <h1 class="cv-name">Cindo<br><span class="cv-lastname">— Nghia</span></h1>
-            <p class="cv-subtitle">[ student.exe ]</p>
+            <h1 class="cv-name">Cindo — Nghia</h1>
+            <p class="cv-subtitle" data-i18n="cvSubtitle">and im just a student</p>
             <hr class="cv-divider" />
-            <p class="cv-intro">hi, i'm Cindo<span class="blink">_</span><br>developer + dictionary.</p>
+            <p class="cv-intro" data-i18n="cvIntro1">hi, i'm Cindo<br>a developer + dictionary.</p>
             <ul class="cv-list">
-              <li>write the Haiku</li>
-              <li>create websites</li>
-              <li>create games</li>
+              <li data-i18n-list="cvList:0">write the Haiku</li>
+              <li data-i18n-list="cvList:1">create websites</li>
+              <li data-i18n-list="cvList:2">create games</li>
             </ul>
-            <p class="cv-intro">wanna yap? email me at <a href="/cdn-cgi/l/email-protection#7d1a1a111c084f4f4e3d1a101c1411531e1210"><span class="__cf_email__" data-cfemail="d6b1b1bab7a3e4e4e596b1bbb7bfbaf8b5b9bb">gglau223@gmail.com</span></a></p>
-            <h2 class="cv-section-title">EDUCATION</h2>
+            <p class="cv-intro"><span data-i18n="cvContact">wanna yap? email me at</span> <a href="mailto:gglau223@gmail.com">gglau223@gmail.com</a></p>
+            <h2 class="cv-section-title" data-i18n="cvEducation">EDUCATION</h2>
             <p class="cv-edu-main">FPT Polytechnic</p>
-            <p class="cv-edu-sub">enrolled 2025</p>
-            <h2 class="cv-section-title">INTERESTS</h2>
+            <p class="cv-edu-sub" data-i18n="cvEnrolled">enrolled 2025</p>
+            <h2 class="cv-section-title" data-i18n="cvInterests">INTERESTS</h2>
             <ul class="cv-list">
-              <li>game development</li>
-              <li>manga / light novel</li>
-              <li>yapping</li>
-              <li>drawing</li>
+              <li data-i18n-list="cvInterestsList:0">game development</li>
+              <li data-i18n-list="cvInterestsList:1">manga / light novel</li>
+              <li data-i18n-list="cvInterestsList:2">yapping</li>
+              <li data-i18n-list="cvInterestsList:3">drawing</li>
             </ul>
-            <h2 class="cv-section-title">LANGUAGES</h2>
+            <h2 class="cv-section-title" data-i18n="cvLanguages">LANGUAGES</h2>
             <div class="cv-lang-box">
-              <p>native English · conversational Vietnamese</p>
-              <p class="cv-lang-note">+ a little Japanese (for haiku 🌸)</p>
+              <p data-i18n="cvLangText">native English · conversational Vietnamese</p>
+              <p class="cv-lang-note" data-i18n="cvLangNote">+ a little Japanese (for haiku)</p>
             </div>
           </div>
         </aside>
 
         <!-- MAIN COLUMN -->
         <section class="main-column">
-          <div class="top-bar"><h2>// OVERVIEW</h2></div>
+          <div class="top-bar"><h2 data-i18n="overviewTitle">// OVERVIEW</h2></div>
 
           <div class="content" style="padding-bottom:48px;">
-            <h3>ABOUT ME</h3>
-            <p>hey, i'm Cindo — a student at FPT Polytechnic and a self-taught dev who builds websites and games for fun.</p>
-            <p>when i'm not coding, i'm drawing, writing haiku, or deep in a manga or light novel. i also speak a little japanese — mostly so my haiku sounds cooler.</p>
-            <p>i like making things: small games in Unity, weird web experiments, pixel art UIs like this one. if it's interactive and a little chaotic, i'm probably into it.</p>
-            <p>feel free to poke around — and if you wanna yap, my email is always open :)</p>
-            <a href="#" id="aboutMoreBtn">MORE INFO</a>
+            <h3 data-i18n="aboutTitle">ABOUT ME</h3>
+            <p data-i18n="aboutP1">hey, i'm Cindo — a student at FPT Polytechnic and a self-taught dev who builds websites and games for fun.</p>
+            <p data-i18n="aboutP2">when i'm not coding, i'm drawing, writing haiku, or deep in a manga or light novel. i also speak a little japanese — mostly so my haiku sounds cooler.</p>
+            <p data-i18n="aboutP3">i like making things: small games in Unity, weird web experiments, pixel art UIs like this one. if it's interactive and a little chaotic, i'm probably into it.</p>
+            <p data-i18n="aboutP4">feel free to poke around — and if you wanna yap, my email is always open :)</p>
+            <a href="#" id="aboutMoreBtn" data-i18n="moreInfo">MORE INFO</a>
           </div>
 
-          <div class="top-bar"><h2>// LINKS</h2></div>
+          <div class="top-bar"><h2 data-i18n="linksTitle">// LINKS</h2></div>
 
           <div class="content">
-            <h3>QUICK LINKS</h3>
-            <p>Click a card to open a window.</p>
+            <h3 data-i18n="quickLinks">QUICK LINKS</h3>
+            <p data-i18n="quickLinksDesc">Click a card to open a window.</p>
             <div class="action-cards">
               <a class="action-card" href="#" data-win="winWeb">
                 <span class="material-symbols-rounded">language</span>
-                <p>WEB</p>
+                <p data-i18n="cardWeb">WEB</p>
               </a>
               <a class="action-card" href="#" data-win="winFollow">
                 <span class="material-symbols-rounded">group</span>
-                <p>FOLLOW</p>
+                <p data-i18n="cardFollow">FOLLOW</p>
               </a>
               <a class="action-card" href="#" data-win="winProject">
                 <span class="material-symbols-rounded">folder_open</span>
-                <p>PROJECT</p>
+                <p data-i18n="cardProject">PROJECT</p>
               </a>
               <a class="action-card" href="#" data-win="winContact">
                 <span class="material-symbols-rounded">mail</span>
-                <p>CONTACT</p>
+                <p data-i18n="cardContact">CONTACT</p>
               </a>
             </div>
           </div>
@@ -103,7 +118,7 @@
       </main>
 
       <footer class="site-footer">
-        <p>THANKS FOR VISITING MY WEBSITE :D<span class="blink"> ♥</span></p>
+        <p data-i18n="footerText">THANKS FOR VISITING MY WEBSITE :D</p>
       </footer>
     </div>
   </div>
@@ -115,8 +130,8 @@
   <!-- WORK WINDOW (About More) -->
   <div id="winWork" class="win" style="width:720px; top:80px; left:140px;">
     <div class="win-titlebar" data-win="winWork">
-      <span class="win-icon">🖥</span>
-      <span class="win-title">WORK.EXE — Cindo's Portfolio</span>
+      <span class="win-icon"><span class="material-symbols-rounded" style="font-size:16px">computer</span></span>
+      <span class="win-title" data-i18n="winWorkTitle"> — Cindo's Portfolio</span>
       <div class="win-controls">
         <button class="win-btn win-minimize" data-action="minimize" data-win="winWork">_</button>
         <button class="win-btn win-maximize" data-action="maximize" data-win="winWork">□</button>
@@ -135,13 +150,13 @@
     </div>
     <div class="win-body">
       <div class="work-notice">
-        <strong>★ ACCEPTING WORK OFFERS</strong>
-        Work email: <a href="/cdn-cgi/l/email-protection#254242494450171716654248444c490b464a48"><span class="__cf_email__" data-cfemail="6007070c011552525320070d01090c4e030f0d">[email&#160;protected]</span></a>
-        <p>I do illustration, web design, and web/app development. :D</p>
+        <strong data-i18n="workNotice">ACCEPTING WORK OFFERS</strong>
+        Work email: <a href="mailto:gglau223@gmail.com">gglau223@gmail.com</a>
+        <p data-i18n="workNoticeText">I do web design, and web/app development. :D</p>
       </div>
       <div class="work-grid">
         <div>
-          <h3>// TOOLS</h3>
+          <h3 data-i18n="toolsTitle">// TOOLS</h3>
           <div class="tag-container">
             <span class="tag">VS Code</span>
             <span class="tag">Eclipse</span>
@@ -152,7 +167,7 @@
           </div>
         </div>
         <div>
-          <h3>// DEVELOPMENT</h3>
+          <h3 data-i18n="devTitle">// DEVELOPMENT</h3>
           <div class="tag-container">
             <span class="tag">C#</span>
             <span class="tag">C++</span>
@@ -167,7 +182,7 @@
         </div>
       </div>
       <div class="my-draw">
-        <h2>// MY DRAW</h2>
+        <h2 data-i18n="myDrawTitle">// MY DRAW</h2>
         <div class="draw-gallery">
           <img src="https://cindosaur.github.io/cindodraw/images/PIC12.png" alt="Artwork 1" data-preview>
           <img src="https://cindosaur.github.io/cindodraw/images/PIC10.png" alt="Artwork 2" data-preview>
@@ -187,8 +202,8 @@
   <!-- WEB WINDOW -->
   <div id="winWeb" class="win" style="width:500px; top:100px; left:200px;">
     <div class="win-titlebar" data-win="winWeb">
-      <span class="win-icon">🌐</span>
-      <span class="win-title">WEB.EXE — My Websites</span>
+      <span class="win-icon"><span class="material-symbols-rounded" style="font-size:16px">language</span></span>
+      <span class="win-title" data-i18n="winWebTitle">WEB — My Websites</span>
       <div class="win-controls">
         <button class="win-btn win-minimize" data-action="minimize" data-win="winWeb">_</button>
         <button class="win-btn win-maximize" data-action="maximize" data-win="winWeb">□</button>
@@ -205,7 +220,7 @@
       <input class="win-addr-input" type="text" value="C:\cindo\web.exe" readonly />
     </div>
     <div class="win-body">
-      <p class="nav-notice">Places where you can see my websites and layouts.</p>
+      <p class="nav-notice" data-i18n="navNoticeWeb">Places where you can see my websites and layouts.</p>
       <div class="icon-grid">
         <div class="icon-item" data-link="https://cindosaur.github.io/cindodraw/">
           <span class="material-symbols-rounded">palette</span>
@@ -229,8 +244,8 @@
   <!-- FOLLOW WINDOW -->
   <div id="winFollow" class="win" style="width:520px; top:120px; left:220px;">
     <div class="win-titlebar" data-win="winFollow">
-      <span class="win-icon">👥</span>
-      <span class="win-title">FOLLOW.EXE — Social Links</span>
+      <span class="win-icon"><span class="material-symbols-rounded" style="font-size:16px">group</span></span>
+      <span class="win-title" data-i18n="winFollowTitle">FOLLOW — Social Links</span>
       <div class="win-controls">
         <button class="win-btn win-minimize" data-action="minimize" data-win="winFollow">_</button>
         <button class="win-btn win-maximize" data-action="maximize" data-win="winFollow">□</button>
@@ -247,7 +262,7 @@
       <input class="win-addr-input" type="text" value="C:\cindo\social.exe" readonly />
     </div>
     <div class="win-body">
-      <p class="nav-notice">Follow me on these platforms.</p>
+      <p class="nav-notice" data-i18n="navNoticeFollow">Follow me on these platforms.</p>
       <div class="icon-grid">
         <div class="icon-item" data-link="https://github.com/CindoSaur">
           <span class="material-symbols-rounded">code</span>
@@ -279,8 +294,8 @@
   <!-- PROJECT WINDOW -->
   <div id="winProject" class="win" style="width:500px; top:110px; left:210px;">
     <div class="win-titlebar" data-win="winProject">
-      <span class="win-icon">📁</span>
-      <span class="win-title">PROJECT.EXE — My Projects</span>
+      <span class="win-icon"><span class="material-symbols-rounded" style="font-size:16px">folder_open</span></span>
+      <span class="win-title" data-i18n="winProjectTitle">PROJECT — My Projects</span>
       <div class="win-controls">
         <button class="win-btn win-minimize" data-action="minimize" data-win="winProject">_</button>
         <button class="win-btn win-maximize" data-action="maximize" data-win="winProject">□</button>
@@ -298,8 +313,9 @@
       <input class="win-addr-input" type="text" value="C:\cindo\projects\" readonly />
     </div>
     <div class="win-body">
-      <p class="nav-notice">Some of my little games and web projects.</p>
-      <div class="icon-grid">
+      <p class="nav-notice" data-i18n="navNoticeProject">Some of my little games and web projects.</p>
+      Sorry for nothing but I will add soon :D
+      <!-- <div class="icon-grid">
         <div class="icon-item" data-link="#">
           <span class="material-symbols-rounded">sports_esports</span>
           <span>GAME PROJECT 1</span>
@@ -311,14 +327,14 @@
         <div class="icon-item" data-link="#">
           <span class="material-symbols-rounded">science</span>
           <span>EXPERIMENT 3</span>
-        </div>
+        </div>-->
       </div>
     </div>
     <div class="win-statusbar">
-      <div class="win-status-left">
+      <!-- <div class="win-status-left">
         <span class="win-status-cell">3 items</span>
         <span class="win-status-cell">Ready</span>
-      </div>
+      </div> -->
     </div>
     <div class="win-resize" data-win="winProject"></div>
   </div>
@@ -326,8 +342,8 @@
   <!-- CONTACT WINDOW -->
   <div id="winContact" class="win" style="width:460px; top:130px; left:240px;">
     <div class="win-titlebar" data-win="winContact">
-      <span class="win-icon">✉</span>
-      <span class="win-title">CONTACT.EXE — Get In Touch</span>
+      <span class="win-icon"><span class="material-symbols-rounded" style="font-size:16px">mail</span></span>
+      <span class="win-title" data-i18n="winContactTitle">CONTACT — Get In Touch</span>
       <div class="win-controls">
         <button class="win-btn win-minimize" data-action="minimize" data-win="winContact">_</button>
         <button class="win-btn win-maximize" data-action="maximize" data-win="winContact">□</button>
@@ -344,7 +360,7 @@
       <input class="win-addr-input" type="text" value="mailto:gglau223@gmail.com" readonly />
     </div>
     <div class="win-body">
-      <p class="nav-notice">Feel free to contact me here.</p>
+      <p class="nav-notice" data-i18n="navNoticeContact">Feel free to contact me here.</p>
       <div class="icon-grid">
         <div class="icon-item" data-link="mailto:gglau223@gmail.com">
           <span class="material-symbols-rounded">mail</span>
@@ -368,8 +384,8 @@
   <!-- IMAGE PREVIEW WINDOW -->
   <div id="winPreview" class="win" style="width:560px; top:60px; left:180px;">
     <div class="win-titlebar" data-win="winPreview">
-      <span class="win-icon">🖼</span>
-      <span class="win-title">IMAGE VIEWER.EXE</span>
+      <span class="win-icon"><span class="material-symbols-rounded" style="font-size:16px">image</span></span>
+      <span class="win-title">IMAGE VIEWER</span>
       <div class="win-controls">
         <button class="win-btn win-minimize" data-action="minimize" data-win="winPreview">_</button>
         <button class="win-btn win-maximize" data-action="maximize" data-win="winPreview">□</button>
@@ -393,18 +409,35 @@
     <div class="win-resize" data-win="winPreview"></div>
   </div>
 
-  <!-- ============================================================
-       TASKBAR
-       ============================================================ -->
   <div id="taskbar">
     <button id="taskbar-start">
-      <span class="star">★</span> START
+      <span class="star">START</span>
     </button>
     <div class="taskbar-sep"></div>
-    <div id="taskbar-btns" style="display:flex;gap:6px;align-items:center;"></div>
+    <div id="taskbar-btns"></div>
+
+    <button id="translateBtn" title="Switch language / Đổi ngôn ngữ" style="
+      margin-left: 6px;
+      height: 30px;
+      padding: 0 10px;
+      background: var(--blue-ink, #1a3a6b);
+      border: 2px solid var(--ink, #1a1410);
+      box-shadow: 2px 2px 0 var(--ink, #1a1410);
+      color: #fff;
+      font-family: 'Caveat', cursive;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    ">Tiếng Việt</button>
+        <div class="taskbar-sep" style="margin-left:auto;"></div>
     <div id="taskbar-clock">
       <span id="taskbar-time">00:00</span>
-      <span id="taskbar-date">--/--</span>
+      <span id="taskbar-date">01/01</span>
     </div>
   </div>
 

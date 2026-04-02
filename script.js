@@ -1,6 +1,8 @@
 /* ============================================================
-   Y2K PIXEL WINDOW MANAGER — script.js
+   Y2K PIXEL WINDOW MANAGER — script.js  (fixed)
    ============================================================ */
+
+document.addEventListener("DOMContentLoaded", function () {
 
 /* ── SOUND ─────────────────────────────────────────────── */
 const openSound  = new Audio("sound/iceberguser.mp3");
@@ -71,10 +73,10 @@ function playClose() { try { closeSound.currentTime = 0; closeSound.play(); } ca
 (function glitchType() {
   const el = document.querySelector(".site-header h1");
   if (!el) return;
-  const original = el.textContent;
   const chars = "█▓▒░#@&%?!01";
   let timeout;
   el.addEventListener("mouseenter", () => {
+    const original = el.textContent;
     let iter = 0;
     clearInterval(timeout);
     timeout = setInterval(() => {
@@ -93,16 +95,15 @@ function playClose() { try { closeSound.currentTime = 0; closeSound.play(); } ca
    WINDOW MANAGER
    ============================================================ */
 
-let zCounter = 200; // base z-index for windows
-
-const windowRegistry = {}; // id → { el, taskbarBtn, minimized, maximized, prevRect }
+let zCounter = 200;
+const windowRegistry = {};
 
 /* --- TASKBAR CLOCK --- */
 function updateClock() {
   const now = new Date();
-  const h = String(now.getHours()).padStart(2,"0");
-  const m = String(now.getMinutes()).padStart(2,"0");
-  const d = String(now.getDate()).padStart(2,"0");
+  const h  = String(now.getHours()).padStart(2,"0");
+  const m  = String(now.getMinutes()).padStart(2,"0");
+  const d  = String(now.getDate()).padStart(2,"0");
   const mo = String(now.getMonth()+1).padStart(2,"0");
   const el_t = document.getElementById("taskbar-time");
   const el_d = document.getElementById("taskbar-date");
@@ -118,24 +119,21 @@ function registerAllWindows() {
     const id = win.id;
     if (!id) return;
 
-    // Find label from title bar
     const titleEl = win.querySelector(".win-title");
     const iconEl  = win.querySelector(".win-icon");
     const label = titleEl ? titleEl.textContent.split("—")[0].trim() : id;
-    const icon  = iconEl  ? iconEl.textContent : "🖥";
+    const iconHTML = iconEl ? iconEl.innerHTML : '<span class="material-symbols-rounded" style="font-size:14px">window</span>';
 
-    // Create taskbar button
     const btn = document.createElement("button");
     btn.className = "taskbar-btn";
-    btn.innerHTML = `<span class="tb-icon">${icon}</span>${label.replace(".EXE","").trim()}`;
+    btn.innerHTML = `<span class="tb-icon">${iconHTML}</span>${label.replace(".EXE","").trim()}`;
     btn.dataset.win = id;
-    btn.style.display = "none"; // hidden until window opens
+    btn.style.display = "none";
     btn.addEventListener("click", () => taskbarBtnClick(id));
     document.getElementById("taskbar-btns").appendChild(btn);
 
     windowRegistry[id] = { el: win, taskbarBtn: btn, minimized: false, maximized: false, prevRect: null };
 
-    // Close / minimize / maximize buttons
     win.querySelectorAll(".win-btn").forEach(b => {
       b.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -147,14 +145,11 @@ function registerAllWindows() {
       });
     });
 
-    // Click window → bring to front
     win.addEventListener("mousedown", () => bringToFront(id), true);
 
-    // Drag by titlebar
     const titlebar = win.querySelector(".win-titlebar");
     if (titlebar) makeDraggable(win, titlebar);
 
-    // Resize
     const resizeHandle = win.querySelector(".win-resize");
     if (resizeHandle) makeResizable(win, resizeHandle);
   });
@@ -169,7 +164,6 @@ function openWindow(id) {
   playOpen();
 
   if (reg.minimized) {
-    // un-minimize
     win.classList.remove("minimized");
     reg.minimized = false;
     reg.taskbarBtn.classList.add("tb-active");
@@ -178,12 +172,10 @@ function openWindow(id) {
   }
 
   if (win.classList.contains("open")) {
-    // already open — just bring to front
     bringToFront(id);
     return;
   }
 
-  // Position window — CSS handles mobile via !important, JS handles desktop
   const isMobile = window.innerWidth <= 768;
   if (!isMobile) {
     const offsets = {
@@ -238,14 +230,13 @@ function minimizeWindow(id) {
   updateAllTitlebars();
 }
 
-/* --- MAXIMIZE / RESTORE WINDOW --- */
+/* --- MAXIMIZE / RESTORE --- */
 function maximizeWindow(id) {
   const reg = windowRegistry[id];
   if (!reg) return;
   const win = reg.el;
 
   if (reg.maximized) {
-    // restore
     win.classList.remove("maximized");
     if (reg.prevRect) {
       win.style.top    = reg.prevRect.top;
@@ -254,11 +245,9 @@ function maximizeWindow(id) {
       win.style.height = reg.prevRect.height;
     }
     reg.maximized = false;
-    // update maximize button
     const btn = win.querySelector(".win-maximize");
     if (btn) btn.textContent = "□";
   } else {
-    // save current rect
     reg.prevRect = {
       top:    win.style.top    || "100px",
       left:   win.style.left   || "100px",
@@ -284,9 +273,8 @@ function bringToFront(id) {
   updateAllTitlebars();
 }
 
-/* --- UPDATE TITLEBARS (active vs inactive) --- */
+/* --- UPDATE TITLEBARS --- */
 function updateAllTitlebars() {
-  // find highest z
   let topZ = 0, topId = null;
   Object.entries(windowRegistry).forEach(([id, reg]) => {
     const z = parseInt(reg.el.style.zIndex || 0);
@@ -315,7 +303,6 @@ function taskbarBtnClick(id) {
   if (reg.minimized) {
     openWindow(id);
   } else if (reg.el.classList.contains("open")) {
-    // if already active, minimize it; else bring to front
     const topZ = Math.max(...Object.values(windowRegistry).map(r => parseInt(r.el.style.zIndex||0)));
     if (parseInt(reg.el.style.zIndex||0) === topZ) {
       minimizeWindow(id);
@@ -325,11 +312,11 @@ function taskbarBtnClick(id) {
   }
 }
 
-/* --- DRAG (desktop only) --- */
+/* --- DRAG --- */
 function makeDraggable(win, handle) {
   let dragging = false, ox = 0, oy = 0;
   handle.addEventListener("mousedown", (e) => {
-    if (window.innerWidth <= 768) return; // no drag on mobile
+    if (window.innerWidth <= 768) return;
     if (e.target.classList.contains("win-btn")) return;
     dragging = true;
     const rect = win.getBoundingClientRect();
@@ -340,7 +327,6 @@ function makeDraggable(win, handle) {
   });
   document.addEventListener("mousemove", (e) => {
     if (!dragging) return;
-    // clamp within viewport
     const maxL = window.innerWidth  - win.offsetWidth;
     const maxT = window.innerHeight - win.offsetHeight - 44;
     win.style.left = Math.max(0, Math.min(e.clientX - ox, maxL)) + "px";
@@ -349,7 +335,7 @@ function makeDraggable(win, handle) {
   document.addEventListener("mouseup", () => { dragging = false; });
 }
 
-/* --- RESIZE (desktop only) --- */
+/* --- RESIZE --- */
 function makeResizable(win, handle) {
   let resizing = false, startX, startY, startW, startH;
   handle.addEventListener("mousedown", (e) => {
@@ -370,16 +356,16 @@ function makeResizable(win, handle) {
 }
 
 /* ── WIRE UP OPENERS ───────────────────────────────────── */
-// Action cards
-document.querySelectorAll(".action-card").forEach(card => {
-  card.addEventListener("click", (e) => {
-    e.preventDefault();
-    const winId = card.dataset.win;
-    if (winId) openWindow(winId);
-  });
+// Action cards — FIX: use event delegation so it always works
+document.addEventListener("click", (e) => {
+  const card = e.target.closest(".action-card");
+  if (!card) return;
+  e.preventDefault();
+  const winId = card.dataset.win;
+  if (winId) openWindow(winId);
 });
 
-// About More button → Work window
+// About More → Work window
 const aboutMoreBtn = document.getElementById("aboutMoreBtn");
 if (aboutMoreBtn) {
   aboutMoreBtn.addEventListener("click", (e) => {
@@ -388,7 +374,7 @@ if (aboutMoreBtn) {
   });
 }
 
-// Gallery images → Preview window
+// Gallery preview
 document.querySelectorAll(".draw-gallery img[data-preview]").forEach(img => {
   img.addEventListener("click", () => {
     document.getElementById("previewImg").src = img.src;
@@ -410,7 +396,6 @@ document.addEventListener("click", (e) => {
 /* ── ESC → close top window ───────────────────────────── */
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape") return;
-  // find top window
   let topZ = 0, topId = null;
   Object.entries(windowRegistry).forEach(([id, reg]) => {
     const z = parseInt(reg.el.style.zIndex||0);
@@ -422,11 +407,9 @@ document.addEventListener("keydown", (e) => {
 });
 
 /* ── STAGGER CARDS ─────────────────────────────────────── */
-(function staggerCards() {
-  document.querySelectorAll(".action-card").forEach((card, i) => {
-    setTimeout(() => card.classList.add("visible"), 300 + i*80);
-  });
-})();
+document.querySelectorAll(".action-card").forEach((card, i) => {
+  setTimeout(() => card.classList.add("visible"), 300 + i*80);
+});
 
 /* ── SIDEBAR SECTION HOVER ─────────────────────────────── */
 document.querySelectorAll(".cv-section-title").forEach(el => {
@@ -436,3 +419,81 @@ document.querySelectorAll(".cv-section-title").forEach(el => {
 
 /* ── INIT ──────────────────────────────────────────────── */
 registerAllWindows();
+
+/* ============================================================
+   TRANSLATION SYSTEM
+   ============================================================ */
+
+let currentLang = "en";
+let translations = null;
+
+// Load vi.json once
+async function loadTranslations() {
+  if (translations) return translations;
+  try {
+    const res = await fetch("vi.json");
+    translations = await res.json();
+  } catch(e) {
+    console.warn("Could not load vi.json:", e);
+    translations = {};
+  }
+  return translations;
+}
+
+// Store original English strings on first run
+function cacheEnglish() {
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    if (!el.dataset.i18nEn) el.dataset.i18nEn = el.innerHTML;
+  });
+  document.querySelectorAll("[data-i18n-list]").forEach(el => {
+    if (!el.dataset.i18nEn) el.dataset.i18nEn = el.textContent.trim();
+  });
+}
+
+function applyTranslations(lang, t) {
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (lang === "vi" && t[key] !== undefined) {
+      el.innerHTML = t[key];
+    } else if (lang === "en" && el.dataset.i18nEn) {
+      el.innerHTML = el.dataset.i18nEn;
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-list]").forEach(el => {
+    const raw = el.dataset.i18nList; // e.g. "cvList:0"
+    const [key, idx] = raw.split(":");
+    if (lang === "vi" && t[key] && t[key][parseInt(idx)] !== undefined) {
+      el.textContent = t[key][parseInt(idx)];
+    } else if (lang === "en" && el.dataset.i18nEn) {
+      el.textContent = el.dataset.i18nEn;
+    }
+  });
+
+  // Update translate button label
+  const btn = document.getElementById("translateBtn");
+  if (btn) {
+    btn.textContent = lang === "vi"
+      ? (t.translateBtnEn || "🌐 English")
+      : (t.translateBtn   || "🌐 Tiếng Việt");
+  }
+}
+
+// Translate button click
+const translateBtn = document.getElementById("translateBtn");
+if (translateBtn) {
+  translateBtn.addEventListener("click", async () => {
+    cacheEnglish();
+    const t = await loadTranslations();
+    currentLang = currentLang === "en" ? "vi" : "en";
+    applyTranslations(currentLang, t);
+    // Toggle Vietnamese font class on body
+    if (currentLang === "vi") {
+      document.body.classList.add("vi-active");
+    } else {
+      document.body.classList.remove("vi-active");
+    }
+  });
+}
+
+}); // end DOMContentLoaded

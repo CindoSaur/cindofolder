@@ -1,102 +1,169 @@
 /* ============================================================
-   Y2K PIXEL ART THEME — cindofolder
-   Windows-style popup system
+   SKETCHBOOK THEME — cindofolder
+   Hand-drawn notebook / pencil sketch aesthetic
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Patrick+Hand&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
+
+/* Vietnamese font override — ensures diacritics render correctly */
+:lang(vi), [lang="vi"] { font-family: 'Be Vietnam Pro', 'Patrick Hand', cursive; }
+.vi-active { font-family: 'Be Vietnam Pro', 'Patrick Hand', cursive !important; }
+body.vi-active,
+body.vi-active p,
+body.vi-active li,
+body.vi-active span:not(.material-symbols-rounded),
+body.vi-active h1,
+body.vi-active h2,
+body.vi-active h3,
+body.vi-active a,
+body.vi-active button,
+body.vi-active .win-title,
+body.vi-active .win-menu-item,
+body.vi-active .win-status-cell,
+body.vi-active .taskbar-btn,
+body.vi-active .cv-name,
+body.vi-active .cv-subtitle,
+body.vi-active .cv-intro,
+body.vi-active .cv-section-title,
+body.vi-active .nav-notice,
+body.vi-active .icon-item,
+body.vi-active .tag,
+body.vi-active #taskbar-start,
+body.vi-active .site-header h1,
+body.vi-active .site-header p,
+body.vi-active .top-bar h2,
+body.vi-active .content h3,
+body.vi-active .content p,
+body.vi-active .site-footer p,
+body.vi-active .action-card p,
+body.vi-active .work-notice,
+body.vi-active .work-grid h3,
+body.vi-active .my-draw h2 {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+}
 
 :root {
-  --bg:        #0d0d1a;
-  --bg2:       #111126;
-  --panel:     #0a0a1f;
-  --accent1:   #ff00ff;
-  --accent2:   #00ffff;
-  --accent3:   #ffff00;
-  --accent4:   #00ff88;
-  --text:      #e0e0ff;
-  --text-dim:  #8888bb;
-  --win-title-active:   linear-gradient(90deg, #1a006a 0%, #9b00d4 40%, #00c8ff 100%);
-  --win-title-inactive: linear-gradient(90deg, #2a2a4a 0%, #3a3a6a 100%);
-  --win-shadow: 6px 6px 0 rgba(255,0,255,0.3), 12px 12px 0 rgba(0,255,255,0.15);
+  --bg:          #f5f0e8;
+  --bg2:         #ede7d9;
+  --paper:       #faf7f0;
+  --ink:         #1a1410;
+  --ink2:        #2d2520;
+  --pencil:      #4a3f35;
+  --red-ink:     #8b1a1a;
+  --blue-ink:    #1a3a6b;
+  --green-ink:   #1a5a2a;
+  --margin-red:  #c0392b;
+  --rule:        rgba(100,120,200,0.18);
+  --shadow:      rgba(30,20,10,0.12);
+  --sketch:      rgba(30,20,10,0.08);
 }
 
 *, *::before, *::after {
   margin: 0; padding: 0;
   box-sizing: border-box;
-  image-rendering: pixelated;
 }
 
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--accent1); border: 2px solid var(--bg); }
-
-/* SCANLINES */
+/* Paper texture overlay */
 body::before {
   content: '';
   position: fixed; inset: 0;
-  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.18) 2px, rgba(0,0,0,0.18) 4px);
-  pointer-events: none; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999; opacity: 0.6;
 }
+
+/* Notebook ruled lines */
 body::after {
   content: '';
   position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none; z-index: 9998; opacity: 0.5;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 27px,
+    var(--rule) 27px,
+    var(--rule) 28px
+  );
+  pointer-events: none; z-index: 0; opacity: 0.7;
 }
 
 body {
   background-color: var(--bg);
-  background-image:
-    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(255,0,255,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0,255,255,0.06) 0%, transparent 55%),
-    linear-gradient(180deg, #0d0d1a 0%, #080818 100%);
-  color: var(--text);
-  font-family: 'Share Tech Mono', monospace;
+  color: var(--ink);
+  font-family: 'Patrick Hand', 'Be Vietnam Pro', cursive;
   padding: 16px 16px 60px;
   min-height: 100vh;
+  /* left red margin line like a notebook */
+  background-image: linear-gradient(
+    to right,
+    transparent 40px,
+    var(--margin-red) 40px,
+    var(--margin-red) 42px,
+    transparent 42px
+  );
 }
 
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--pencil); border: 2px solid var(--bg); border-radius: 4px; }
+
 /* LAYOUT */
-.page-wrapper { min-height: 100vh; display: flex; flex-direction: column; }
+.page-wrapper { min-height: 100vh; display: flex; flex-direction: column; position: relative; z-index: 1; }
 .container { max-width: 1140px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; gap: 18px; }
+
+/* ── SKETCHY BORDER MIXIN (via box-shadow trick) ── */
+/* We simulate hand-drawn borders with slightly uneven shadows */
 
 /* HEADER */
 .site-header {
-  background: var(--panel);
-  border: 3px solid var(--accent1);
-  box-shadow: 4px 4px 0 var(--accent2);
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow:
+    3px 3px 0 var(--ink),
+    -1px -1px 0 rgba(30,20,10,0.15),
+    inset 0 0 40px rgba(200,180,140,0.15);
   padding: 20px 24px; text-align: center;
   position: relative; overflow: hidden;
+  /* slight tilt for hand-drawn feel */
+  transform: rotate(-0.3deg);
   animation: headerSlide 0.5s ease-out both;
 }
-@keyframes headerSlide { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes headerSlide { from { transform: translateY(-20px) rotate(-0.3deg); opacity: 0; } to { transform: translateY(0) rotate(-0.3deg); opacity: 1; } }
+
+/* Tape decoration on header */
+.site-header::before {
+  content: '';
+  position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+  width: 60px; height: 18px;
+  background: rgba(255,220,100,0.55);
+  border: 1px solid rgba(180,150,50,0.4);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+/* Corner fold */
 .site-header::after {
   content: '';
-  position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent1), var(--accent2), transparent);
-  animation: scanH 3s linear infinite;
+  position: absolute; bottom: 0; right: 0;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 0 0 18px 18px;
+  border-color: transparent transparent var(--bg2) transparent;
+  filter: drop-shadow(-1px -1px 1px rgba(0,0,0,0.15));
 }
-@keyframes scanH { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
-.site-header::before {
-  content: '◆ ◆ ◆';
-  position: absolute; top: 8px; left: 12px;
-  font-size: 8px; color: rgba(255,0,255,0.4);
-  font-family: 'Press Start 2P', monospace; letter-spacing: 4px;
-}
+
 .site-header h1 {
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(13px, 2.5vw, 20px);
-  color: var(--accent1);
-  text-shadow: 2px 2px 0 var(--accent2), 0 0 20px rgba(255,0,255,0.6);
-  letter-spacing: 0.04em; margin-bottom: 10px;
-  animation: glitch 5s infinite;
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive;
+  font-size: clamp(22px, 3.5vw, 36px);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.04em; margin-bottom: 8px;
+  /* pencil underline */
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--margin-red);
+  text-underline-offset: 4px;
 }
-@keyframes glitch {
-  0%,95%,100% { text-shadow: 2px 2px 0 var(--accent2), 0 0 20px rgba(255,0,255,0.6); transform: none; }
-  96% { text-shadow: -2px 0 var(--accent2), 2px 0 var(--accent1); transform: translate(-1px,0); }
-  97% { text-shadow: 2px 0 var(--accent2), -2px 0 var(--accent3); transform: translate(1px,0); }
+.site-header p {
+  font-family: 'Kalam', 'Be Vietnam Pro', cursive;
+  font-size: 18px; color: var(--pencil);
+  letter-spacing: 0.04em;
 }
-.site-header p { font-family: 'VT323', monospace; font-size: 20px; color: var(--accent2); letter-spacing: 0.08em; }
 
 /* MAIN GRID */
 .layout { display: grid; grid-template-columns: 270px 1fr; gap: 18px; align-items: start; }
@@ -105,99 +172,215 @@ body {
 .sidebar { display: flex; align-items: stretch; }
 .sidebar-inner {
   width: 100%;
-  background: var(--panel);
-  border: 3px solid var(--accent1);
-  box-shadow: 4px 4px 0 var(--accent2);
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink), -1px -1px 0 rgba(30,20,10,0.1);
   padding: 22px 18px;
+  transform: rotate(0.4deg);
   animation: sideSlide 0.55s 0.1s ease-out both;
+  position: relative;
 }
-@keyframes sideSlide { from { transform: translateX(-24px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes sideSlide { from { transform: translateX(-24px) rotate(0.4deg); opacity: 0; } to { transform: translateX(0) rotate(0.4deg); opacity: 1; } }
+
+/* Profile label like a sticky note tab */
 .sidebar-inner::before {
-  content: '[ PROFILE.EXE ]';
+  content: '[ PROFILE ]';
   display: block;
-  background: var(--win-title-active);
-  color: #fff;
-  font-family: 'Press Start 2P', monospace; font-size: 7px;
-  padding: 5px 8px; margin: -22px -18px 18px -18px; letter-spacing: 0.04em;
+  background: #f5e642;
+  color: var(--ink2);
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 12px; font-weight: 700;
+  padding: 5px 10px; margin: -22px -18px 18px -18px;
+  letter-spacing: 0.06em;
+  border-bottom: 2px solid var(--ink);
+  box-shadow: 0 2px 4px var(--shadow);
 }
+
 .avatar {
   width: 80px; height: 80px;
-  border: 3px solid var(--accent2);
-  box-shadow: 3px 3px 0 var(--accent1), 0 0 16px rgba(0,255,255,0.3);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
   overflow: hidden; margin: 0 auto 14px; position: relative;
+  transform: rotate(-2deg);
 }
-.avatar::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,0,255,0.12), transparent 50%); }
-.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(1.2) contrast(1.1); }
-.cv-name { font-family: 'Press Start 2P', monospace; font-size: 12px; color: var(--accent1); text-shadow: 1px 1px 0 var(--accent2); line-height: 1.6; text-align: center; }
-.cv-lastname { color: var(--accent2); font-weight: 400; }
-.cv-subtitle { font-family: 'VT323', monospace; font-size: 18px; color: var(--accent3); text-align: center; margin-top: 4px; letter-spacing: 0.06em; }
-.cv-divider { border: none; border-top: 2px dashed rgba(255,0,255,0.35); margin: 14px 0; }
-.cv-intro { font-family: 'VT323', monospace; font-size: 17px; line-height: 1.5; color: var(--text); margin-bottom: 8px; }
-.cv-intro a { color: var(--accent2); text-decoration: none; border-bottom: 1px dashed; }
-.cv-intro a:hover { color: var(--accent1); border-color: var(--accent1); }
-.cv-section-title { font-family: 'Press Start 2P', monospace; font-size: 7px; color: var(--accent3); margin: 16px 0 7px; letter-spacing: 0.05em; padding-left: 6px; border-left: 3px solid var(--accent3); transition: color 0.15s, border-color 0.15s; }
-.cv-edu-main { font-family: 'VT323', monospace; font-size: 17px; color: var(--text); }
-.cv-edu-sub { font-family: 'VT323', monospace; font-size: 15px; color: var(--text-dim); }
+/* Photo corner tabs */
+.avatar::before, .avatar::after {
+  content: '';
+  position: absolute;
+  width: 14px; height: 10px;
+  background: rgba(255,220,100,0.7);
+  border: 1px solid rgba(180,150,50,0.5);
+}
+.avatar::before { top: -4px; left: -3px; transform: rotate(-8deg); }
+.avatar::after  { bottom: -4px; right: -3px; transform: rotate(5deg); }
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; filter: contrast(1.05) sepia(0.08); }
+
+.cv-name {
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 20px; font-weight: 700;
+  color: var(--ink); line-height: 1.4; text-align: center;
+  text-decoration: underline; text-decoration-style: wavy;
+  text-decoration-color: var(--margin-red); text-underline-offset: 3px;
+}
+.cv-lastname { color: var(--blue-ink); }
+.cv-subtitle {
+  font-family: 'Kalam', 'Be Vietnam Pro', cursive; font-size: 16px;
+  color: var(--pencil); text-align: center; margin-top: 4px;
+}
+.cv-divider {
+  border: none;
+  border-top: 1px dashed rgba(30,20,10,0.3);
+  margin: 14px 0;
+  position: relative;
+}
+.cv-divider::after {
+  content: '✂';
+  position: absolute; right: 0; top: -9px;
+  font-size: 14px; color: rgba(30,20,10,0.25);
+}
+.cv-intro { font-size: 15px; line-height: 1.6; color: var(--ink2); margin-bottom: 8px; }
+.cv-intro a { color: var(--blue-ink); text-decoration: underline; text-decoration-style: dotted; }
+.cv-intro a:hover { color: var(--margin-red); }
+
+.cv-section-title {
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 14px; font-weight: 700;
+  color: var(--margin-red); margin: 16px 0 7px;
+  letter-spacing: 0.06em; padding-left: 8px;
+  border-left: 3px solid var(--margin-red);
+  text-transform: uppercase;
+  transition: color 0.15s, border-color 0.15s;
+}
+.cv-edu-main { font-size: 15px; color: var(--ink); }
+.cv-edu-sub  { font-size: 13px; color: var(--pencil); font-style: italic; }
 .cv-list { list-style: none; margin: 4px 0 10px; }
-.cv-list li { font-family: 'VT323', monospace; font-size: 16px; color: var(--text); padding: 2px 0 2px 16px; position: relative; }
-.cv-list li::before { content: '▶'; position: absolute; left: 0; color: var(--accent1); font-size: 10px; top: 4px; }
-.cv-lang-box { border-left: 3px solid var(--accent2); background: rgba(0,255,255,0.04); padding: 8px 10px; margin-top: 6px; }
-.cv-lang-box p { font-family: 'VT323', monospace; font-size: 16px; color: var(--text); }
-.cv-lang-note { font-size: 14px !important; color: var(--text-dim) !important; margin-top: 4px; }
+.cv-list li {
+  font-size: 14px; color: var(--ink2);
+  padding: 2px 0 2px 18px; position: relative; line-height: 1.5;
+}
+.cv-list li::before {
+  content: '→';
+  position: absolute; left: 0; color: var(--margin-red);
+  font-size: 13px; top: 3px;
+}
+.cv-lang-box {
+  border-left: 3px solid var(--blue-ink);
+  background: rgba(26,58,107,0.04);
+  padding: 8px 10px; margin-top: 6px;
+}
+.cv-lang-box p { font-size: 14px; color: var(--ink2); line-height: 1.5; }
+.cv-lang-note  { font-size: 13px !important; color: var(--pencil) !important; margin-top: 4px; font-style: italic; }
 
 /* MAIN COLUMN */
 .main-column { display: flex; flex-direction: column; gap: 18px; animation: mainSlide 0.55s 0.2s ease-out both; }
 @keyframes mainSlide { from { transform: translateX(24px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-.top-bar { background: var(--win-title-active); padding: 8px 16px; position: relative; }
-.top-bar h2 { font-family: 'Press Start 2P', monospace; font-size: 9px; color: #fff; letter-spacing: 0.08em; }
-.top-bar::after { content: '●●●'; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 8px; color: rgba(255,255,255,0.6); letter-spacing: 3px; }
+.top-bar {
+  background: #f5e642;
+  padding: 7px 16px;
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  position: relative;
+}
+.top-bar h2 {
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 16px; font-weight: 700;
+  color: var(--ink); letter-spacing: 0.05em;
+}
+/* Paper clip decoration */
+.top-bar::after {
+  content: '📎';
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 16px; opacity: 0.7;
+}
 
 .content {
-  background: var(--panel); border: 3px solid var(--accent2);
-  box-shadow: 4px 4px 0 var(--accent1); padding: 18px 20px; position: relative;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink), -1px -1px 0 rgba(30,20,10,0.08);
+  padding: 18px 20px; position: relative;
+  transition: box-shadow 0.15s, transform 0.15s;
 }
-.content:hover { box-shadow: 4px 4px 0 var(--accent1), 0 0 18px rgba(255,0,255,0.15); transition: box-shadow 0.2s; }
-.content h3 { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--accent2); text-shadow: 1px 1px 0 var(--accent1); margin-bottom: 12px; letter-spacing: 0.06em; }
-.content p { font-family: 'VT323', monospace; font-size: 18px; color: var(--text); line-height: 1.4; margin-bottom: 6px; }
+.content:hover {
+  box-shadow: 5px 5px 0 var(--ink), -1px -1px 0 rgba(30,20,10,0.1);
+  transform: translate(-1px, -1px);
+}
+.content h3 {
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 17px; font-weight: 700;
+  color: var(--blue-ink); margin-bottom: 12px; letter-spacing: 0.04em;
+  text-decoration: underline; text-decoration-style: solid;
+  text-decoration-color: var(--blue-ink); text-underline-offset: 2px;
+}
+.content p {
+  font-size: 16px; color: var(--ink2); line-height: 1.65; margin-bottom: 8px;
+}
 
 /* ACTION CARDS */
 .action-cards { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 16px; }
 .action-card {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-decoration: none; color: inherit; width: 120px;
-  background: var(--bg2); border: 3px solid var(--accent1);
-  box-shadow: 3px 3px 0 var(--accent2); padding: 14px 10px 12px;
+  text-decoration: none; color: inherit; width: 110px;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  padding: 14px 10px 12px;
   cursor: pointer; position: relative; overflow: hidden;
-  opacity: 0; transform: translateY(16px);
-  transition: opacity 0.35s ease, transform 0.35s ease, box-shadow 0.1s;
+  opacity: 0; transform: translateY(16px) rotate(-1deg);
+  transition: opacity 0.35s ease, transform 0.35s ease, box-shadow 0.12s;
 }
-.action-card.visible { opacity: 1; transform: translateY(0); }
-.action-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,0,255,0.08) 0%, transparent 60%); }
-.action-card::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); transition: left 0.35s; }
-.action-card:hover::after { left: 100%; }
-.action-card:hover { transform: translate(-3px,-3px) !important; box-shadow: 6px 6px 0 var(--accent2); }
-.action-card:active { transform: translate(1px,1px) !important; box-shadow: 2px 2px 0 var(--accent2); }
-.action-card .material-symbols-rounded { font-size: 28px; color: var(--accent3); margin-bottom: 10px; display: block; filter: drop-shadow(0 0 6px rgba(255,255,0,0.5)); }
-.action-card p { font-family: 'Press Start 2P', monospace !important; font-size: 7px !important; color: var(--accent1) !important; text-align: center; letter-spacing: 0.04em; line-height: 1.6 !important; margin: 0 !important; }
+.action-card:nth-child(2) { transform: translateY(16px) rotate(1deg); }
+.action-card:nth-child(3) { transform: translateY(16px) rotate(-0.5deg); }
+.action-card:nth-child(4) { transform: translateY(16px) rotate(0.8deg); }
+
+.action-card.visible { opacity: 1; transform: translateY(0) rotate(-1deg); }
+.action-card:nth-child(2).visible { transform: translateY(0) rotate(1deg); }
+.action-card:nth-child(3).visible { transform: translateY(0) rotate(-0.5deg); }
+.action-card:nth-child(4).visible { transform: translateY(0) rotate(0.8deg); }
+
+/* Tape on action cards */
+.action-card::before {
+  content: '';
+  position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+  width: 30px; height: 12px;
+  background: rgba(255,220,100,0.6);
+  border: 1px solid rgba(180,150,50,0.35);
+}
+.action-card:hover { transform: translate(-3px,-3px) rotate(0deg) !important; box-shadow: 6px 6px 0 var(--ink); }
+.action-card:active { transform: translate(1px,1px) rotate(0deg) !important; box-shadow: 2px 2px 0 var(--ink); }
+.action-card .material-symbols-rounded {
+  font-size: 26px; color: var(--blue-ink); margin-bottom: 8px; display: block;
+}
+.action-card p {
+  font-family: 'Caveat', cursive !important; font-size: 13px !important;
+  color: var(--ink) !important; text-align: center; font-weight: 700;
+  letter-spacing: 0.04em; line-height: 1.3 !important; margin: 0 !important;
+}
 
 /* ABOUT BTN */
 #aboutMoreBtn {
   display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 14px; background: var(--accent1); color: var(--bg) !important;
-  font-family: 'Press Start 2P', monospace; font-size: 7px; letter-spacing: 0.04em;
-  border: none; box-shadow: 2px 2px 0 var(--accent2); cursor: pointer;
+  padding: 6px 14px; background: var(--margin-red); color: #fff !important;
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 14px; font-weight: 700;
+  border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink); cursor: pointer;
   text-decoration: none; position: absolute; bottom: 12px; right: 14px;
   transition: transform 0.1s, box-shadow 0.1s;
+  letter-spacing: 0.04em;
 }
-#aboutMoreBtn::before { content: '▶ '; }
-#aboutMoreBtn:hover { transform: translate(-2px,-2px); box-shadow: 4px 4px 0 var(--accent2); }
-#aboutMoreBtn:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--accent2); }
+#aboutMoreBtn::before { content: '→ '; }
+#aboutMoreBtn:hover { transform: translate(-2px,-2px); box-shadow: 4px 4px 0 var(--ink); }
+#aboutMoreBtn:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--ink); }
 
 /* FOOTER */
-.site-footer { background: var(--panel); border: 3px solid var(--accent1); box-shadow: 4px 4px 0 var(--accent2); padding: 14px 20px; text-align: center; }
-.site-footer::before { content: '◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆'; display: block; color: rgba(255,0,255,0.2); font-size: 8px; letter-spacing: 2px; margin-bottom: 8px; overflow: hidden; font-family: 'Press Start 2P', monospace; }
-.site-footer p { font-family: 'VT323', monospace; font-size: 18px; color: var(--accent2); letter-spacing: 0.06em; }
+.site-footer {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  padding: 14px 20px; text-align: center;
+}
+/* Doodle line decoration */
+.site-footer::before {
+  content: '~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~';
+  display: block; color: rgba(30,20,10,0.2); font-size: 10px;
+  letter-spacing: 2px; margin-bottom: 8px; overflow: hidden;
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive;
+}
+.site-footer p { font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 18px; color: var(--ink); font-weight: 600; }
 
 @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 .blink { animation: blink 1s step-end infinite; }
@@ -206,107 +389,132 @@ body {
    WINDOWS POPUP SYSTEM
    ============================================================ */
 
-/* Base window */
 .win {
   position: fixed;
-  min-width: 320px;
-  min-height: 200px;
-  background: #08081a;
-  border: 3px solid var(--accent1);
-  outline: 1px solid rgba(0,255,255,0.2);
-  box-shadow: var(--win-shadow);
-  display: none;
-  flex-direction: column;
-  z-index: 100;
-  overflow: hidden;
+  min-width: 320px; min-height: 200px;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink), -1px -1px 0 rgba(30,20,10,0.15);
+  display: none; flex-direction: column;
+  z-index: 100; overflow: hidden;
+  /* slight random tilt — feels like paper on a desk */
+  transform: rotate(-0.5deg);
 }
-.win.open { display: flex; animation: winOpen 0.18s cubic-bezier(0.17,0.67,0.5,1.28) both; }
-@keyframes winOpen { from { transform: scale(0.85) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
-.win.closing { animation: winClose 0.15s ease forwards !important; }
-@keyframes winClose { from { transform: scale(1); opacity: 1; } to { transform: scale(0.85) translateY(10px); opacity: 0; } }
+.win:nth-child(even) { transform: rotate(0.4deg); }
 
-.win.active-window { border-color: var(--accent1); box-shadow: var(--win-shadow); }
-.win.inactive-window { border-color: #553366; box-shadow: 3px 3px 0 rgba(0,0,0,0.5); }
+.win.open {
+  display: flex;
+  animation: winOpen 0.2s cubic-bezier(0.17,0.67,0.5,1.28) both;
+}
+@keyframes winOpen {
+  from { transform: scale(0.88) translateY(8px) rotate(-1deg); opacity: 0; }
+  to   { transform: scale(1) translateY(0) rotate(-0.5deg); opacity: 1; }
+}
+.win.closing { animation: winClose 0.15s ease forwards !important; }
+@keyframes winClose {
+  from { transform: scale(1); opacity: 1; }
+  to   { transform: scale(0.88) translateY(8px); opacity: 0; }
+}
+
+.win.active-window {
+  border-color: var(--ink);
+  box-shadow: 5px 5px 0 var(--ink), -1px -1px 0 rgba(30,20,10,0.15);
+}
+.win.inactive-window {
+  border-color: rgba(30,20,10,0.3);
+  box-shadow: 3px 3px 0 rgba(30,20,10,0.2);
+  opacity: 0.88;
+}
 
 .win.maximized {
   top: 0 !important; left: 0 !important;
   width: 100vw !important; height: calc(100vh - 44px) !important;
-  border-width: 0;
+  border-width: 0; transform: none !important;
 }
 .win.minimized { display: none !important; }
 
 /* Title bar */
 .win-titlebar {
-  background: var(--win-title-active);
+  background: #f5e642;
+  border-bottom: 2px solid var(--ink);
   padding: 0 6px; height: 28px;
   display: flex; align-items: center; gap: 8px;
   cursor: move; user-select: none; flex-shrink: 0;
 }
-.win.inactive-window .win-titlebar { background: var(--win-title-inactive); }
+.win.inactive-window .win-titlebar { background: var(--bg2); }
 
-.win-icon { font-size: 14px; line-height: 1; flex-shrink: 0; color: #fff; }
-.win-title { font-family: 'Press Start 2P', monospace; font-size: 7px; color: #fff; letter-spacing: 0.05em; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 1px 1px 0 rgba(0,0,0,0.5); }
+.win-icon  { font-size: 14px; line-height: 1; flex-shrink: 0; display:flex; align-items:center; }
+.win-icon .material-symbols-rounded { font-size: 16px !important; color: var(--ink); }
+.win-title {
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 14px; font-weight: 700;
+  color: var(--ink); flex: 1; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.03em;
+}
 
 .win-controls { display: flex; gap: 3px; flex-shrink: 0; }
 .win-btn {
   width: 20px; height: 18px;
-  background: #1a0040; border: 2px solid rgba(255,255,255,0.35);
-  color: #fff; font-family: 'Press Start 2P', monospace; font-size: 8px;
+  background: var(--bg2); border: 2px solid var(--ink);
+  color: var(--ink); font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 11px;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
   line-height: 1; padding: 0; transition: background 0.1s;
+  font-weight: 700;
 }
-.win-btn:hover { background: rgba(255,255,255,0.2); }
-.win-btn.win-minimize:hover { background: #555500; }
-.win-btn.win-maximize:hover { background: #004400; }
-.win-btn.win-close { background: #880000; border-color: #ff4444; }
-.win-btn.win-close:hover { background: #cc0000; }
+.win-btn:hover { background: var(--bg); }
+.win-btn.win-minimize:hover { background: #f5e642; }
+.win-btn.win-maximize:hover { background: #a8d8a8; }
+.win-btn.win-close { background: #ffb3b3; border-color: var(--ink); }
+.win-btn.win-close:hover { background: var(--margin-red); color: #fff; }
 
 /* Menu bar */
 .win-menubar {
-  background: rgba(8,5,22,0.98);
-  border-bottom: 2px solid rgba(255,0,255,0.2);
+  background: var(--bg2);
+  border-bottom: 1px solid rgba(30,20,10,0.2);
   padding: 2px 6px; display: flex; gap: 2px; flex-shrink: 0;
 }
 .win-menu-item {
-  font-family: 'Press Start 2P', monospace; font-size: 6px;
-  color: var(--text); padding: 3px 8px; cursor: pointer;
-  border: 1px solid transparent; letter-spacing: 0.03em;
+  font-family: 'Patrick Hand', 'Be Vietnam Pro', cursive; font-size: 13px;
+  color: var(--ink2); padding: 2px 8px; cursor: pointer;
+  border: 1px solid transparent; border-radius: 2px;
 }
-.win-menu-item:hover { background: var(--accent1); color: var(--bg); border-color: var(--accent2); }
+.win-menu-item:hover { background: var(--paper); border-color: rgba(30,20,10,0.2); }
 
 /* Address bar */
 .win-addressbar {
-  background: rgba(5,5,18,0.9);
-  border-bottom: 2px solid rgba(0,255,255,0.15);
+  background: var(--bg);
+  border-bottom: 1px solid rgba(30,20,10,0.15);
   padding: 3px 8px; display: flex; align-items: center; gap: 8px; flex-shrink: 0;
 }
-.win-addr-label { font-family: 'Press Start 2P', monospace; font-size: 6px; color: var(--text-dim); flex-shrink: 0; }
-.win-addr-input {
-  flex: 1; background: rgba(0,0,15,0.8); border: 2px solid rgba(255,0,255,0.3);
-  color: var(--accent2); font-family: 'Share Tech Mono', monospace; font-size: 12px;
-  padding: 2px 6px; outline: none;
+.win-addr-label {
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 13px; color: var(--pencil); flex-shrink: 0;
 }
-.win-addr-input:focus { border-color: var(--accent1); }
+.win-addr-input {
+  flex: 1; background: var(--paper); border: 1px solid rgba(30,20,10,0.3);
+  color: var(--blue-ink); font-family: 'Patrick Hand', 'Be Vietnam Pro', cursive; font-size: 13px;
+  padding: 2px 6px; outline: none; border-radius: 2px;
+}
+.win-addr-input:focus { border-color: var(--blue-ink); }
 
 /* Window body */
 .win-body {
   padding: 16px 18px; overflow-y: auto; flex: 1;
-  font-family: 'VT323', monospace; color: var(--text);
-  border: 2px solid rgba(0,255,255,0.06); margin: 3px;
+  font-family: 'Patrick Hand', 'Be Vietnam Pro', cursive; color: var(--ink2);
 }
 .win-body::-webkit-scrollbar { width: 8px; }
-.win-body::-webkit-scrollbar-track { background: var(--bg); }
-.win-body::-webkit-scrollbar-thumb { background: var(--accent1); border: 2px solid var(--bg); }
+.win-body::-webkit-scrollbar-track { background: var(--bg2); }
+.win-body::-webkit-scrollbar-thumb { background: var(--pencil); border: 2px solid var(--bg); border-radius: 4px; }
 
 /* Status bar */
 .win-statusbar {
-  background: rgba(5,5,18,0.95); border-top: 2px solid rgba(255,0,255,0.2);
-  padding: 3px 10px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
+  background: var(--bg2);
+  border-top: 1px solid rgba(30,20,10,0.2);
+  padding: 3px 10px; display: flex; justify-content: space-between;
+  align-items: center; flex-shrink: 0;
 }
 .win-status-left { display: flex; gap: 0; }
 .win-status-cell {
-  font-family: 'VT323', monospace; font-size: 13px; color: var(--text-dim);
-  padding: 0 10px; border-right: 1px solid rgba(255,0,255,0.2);
+  font-family: 'Kalam', 'Be Vietnam Pro', cursive; font-size: 13px; color: var(--pencil);
+  padding: 0 10px; border-right: 1px solid rgba(30,20,10,0.15);
 }
 .win-status-cell:last-child { border-right: none; }
 
@@ -316,300 +524,264 @@ body {
   width: 16px; height: 16px; cursor: se-resize; z-index: 10;
 }
 .win-resize::before {
-  content: '◢'; font-size: 14px; color: var(--accent1);
-  position: absolute; bottom: 2px; right: 2px; line-height: 1; opacity: 0.6;
+  content: '◢'; font-size: 14px; color: var(--pencil);
+  position: absolute; bottom: 2px; right: 2px; line-height: 1; opacity: 0.5;
 }
-.win-resize:hover::before { opacity: 1; color: var(--accent3); }
+.win-resize:hover::before { opacity: 1; color: var(--margin-red); }
 
 /* ── WORK WINDOW CONTENT ── */
 .work-notice {
-  background: rgba(255,0,255,0.07); border: 2px solid var(--accent1);
-  box-shadow: 2px 2px 0 var(--accent2); padding: 12px 16px; margin-bottom: 20px;
+  background: #fffde7;
+  border: 2px solid var(--ink); border-left: 4px solid var(--margin-red);
+  box-shadow: 2px 2px 0 rgba(30,20,10,0.12);
+  padding: 12px 16px; margin-bottom: 20px;
 }
-.work-notice strong { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--accent3); display: block; margin-bottom: 6px; }
-.work-notice a { color: var(--accent2); text-decoration: none; border-bottom: 1px dashed; }
-.work-notice a:hover { color: var(--accent1); }
-.work-notice p { font-size: 16px; margin-top: 4px; }
+.work-notice strong {
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 15px; font-weight: 700;
+  color: var(--margin-red); display: block; margin-bottom: 6px;
+}
+.work-notice a { color: var(--blue-ink); text-decoration: underline; text-decoration-style: dotted; }
+.work-notice a:hover { color: var(--margin-red); }
+.work-notice p { font-size: 15px; margin-top: 4px; }
 
 .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 20px; }
-.work-grid h3 { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--accent3); margin-bottom: 12px; }
+.work-grid h3 {
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 16px; font-weight: 700;
+  color: var(--blue-ink); margin-bottom: 12px;
+  text-decoration: underline; text-decoration-style: solid;
+  text-underline-offset: 2px;
+}
 
 .tag-container { display: flex; flex-wrap: wrap; gap: 8px; }
 .tag {
-  background: var(--bg); color: var(--accent2);
-  padding: 5px 10px; font-family: 'VT323', monospace; font-size: 15px;
-  border: 2px solid var(--accent2); box-shadow: 2px 2px 0 var(--accent1);
+  background: var(--bg); color: var(--ink2);
+  padding: 4px 10px; font-family: 'Kalam', 'Be Vietnam Pro', cursive; font-size: 14px;
+  border: 1px solid var(--ink); box-shadow: 2px 2px 0 rgba(30,20,10,0.15);
   cursor: default; transition: transform 0.1s, box-shadow 0.1s;
+  border-radius: 2px;
 }
-.tag:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--accent1); color: var(--accent3); border-color: var(--accent3); }
+.tag:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 rgba(30,20,10,0.2); color: var(--margin-red); border-color: var(--margin-red); }
 
-.my-draw h2 { font-family: 'Press Start 2P', monospace; font-size: 9px; color: var(--accent4); margin-bottom: 14px; }
+.my-draw h2 {
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 17px; font-weight: 700;
+  color: var(--green-ink); margin-bottom: 14px;
+}
 .draw-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
 .draw-gallery img {
   width: 100%; height: 120px; object-fit: cover;
-  border: 3px solid var(--accent2); box-shadow: 3px 3px 0 var(--accent1);
-  cursor: pointer; transition: transform 0.12s, box-shadow 0.12s; filter: saturate(1.1);
+  border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
+  filter: sepia(0.05) contrast(1.05);
+  transform: rotate(-1deg);
 }
-.draw-gallery img:hover { transform: translate(-3px,-3px) scale(1.04); box-shadow: 6px 6px 0 var(--accent1); filter: saturate(1.4) brightness(1.05); }
+.draw-gallery img:nth-child(2) { transform: rotate(1.5deg); }
+.draw-gallery img:nth-child(3) { transform: rotate(-0.5deg); }
+.draw-gallery img:hover {
+  transform: translate(-3px,-3px) rotate(0deg) scale(1.04);
+  box-shadow: 6px 6px 0 var(--ink);
+}
 
-/* NAV WINDOW CONTENT */
+/* NAV / ICON GRID */
 .nav-notice {
-  font-family: 'VT323', monospace; font-size: 17px; color: var(--text-dim);
-  padding: 8px 10px; border-left: 3px solid var(--accent2);
-  margin-bottom: 16px; background: rgba(0,255,255,0.04);
+  font-family: 'Kalam', 'Be Vietnam Pro', cursive; font-size: 15px; color: var(--pencil);
+  padding: 8px 10px; border-left: 3px solid var(--blue-ink);
+  margin-bottom: 16px; background: rgba(26,58,107,0.04);
+  font-style: italic;
 }
 .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
 .icon-item {
-  background: var(--bg2); color: var(--text); padding: 14px 10px;
-  border: 3px solid var(--accent1); box-shadow: 3px 3px 0 var(--accent2);
-  font-family: 'Press Start 2P', monospace; font-size: 7px;
+  background: var(--bg2); color: var(--ink2); padding: 14px 10px;
+  border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 13px; font-weight: 700;
   cursor: pointer; display: flex; flex-direction: column;
-  align-items: center; gap: 8px; text-align: center; line-height: 1.5;
-  transition: transform 0.1s, box-shadow 0.1s; position: relative; overflow: hidden;
+  align-items: center; gap: 8px; text-align: center; line-height: 1.4;
+  transition: transform 0.1s, box-shadow 0.1s; position: relative;
+  transform: rotate(-0.5deg);
 }
-.icon-item::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,0,255,0.1), transparent); transition: left 0.3s; }
-.icon-item:hover::after { left: 100%; }
-.icon-item:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--accent2); border-color: var(--accent3); color: var(--accent3); }
-.icon-item:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--accent2); }
-.icon-item .material-symbols-rounded { font-size: 24px; color: var(--accent2); filter: drop-shadow(0 0 4px rgba(0,255,255,0.5)); }
-.icon-item span { font-size: 7px; }
+.icon-item:nth-child(even) { transform: rotate(0.5deg); }
+.icon-item:hover {
+  transform: translate(-2px,-2px) rotate(0deg) !important;
+  box-shadow: 5px 5px 0 var(--ink); color: var(--margin-red);
+}
+.icon-item:active { transform: translate(1px,1px) !important; box-shadow: 1px 1px 0 var(--ink); }
+.icon-item .material-symbols-rounded { font-size: 24px; color: var(--blue-ink); }
+.icon-item span { font-size: 13px; }
 
-/* Image preview inside window */
-#previewImg { max-width: 100%; max-height: 55vh; display: block; margin: 0 auto; border: 3px solid var(--accent1); box-shadow: 4px 4px 0 var(--accent2); }
+/* Image preview */
+#previewImg {
+  max-width: 100%; max-height: 55vh; display: block; margin: 0 auto;
+  border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--ink);
+}
 
 /* ============================================================
    TASKBAR
    ============================================================ */
 #taskbar {
   position: fixed; bottom: 0; left: 0; right: 0; height: 44px;
-  background: linear-gradient(180deg, #0d0a28 0%, #05050f 100%);
-  border-top: 3px solid var(--accent1);
-  box-shadow: 0 -2px 0 var(--accent2);
+  background: var(--bg2);
+  border-top: 2px solid var(--ink);
+  box-shadow: 0 -2px 0 rgba(30,20,10,0.1);
   display: flex; align-items: center; padding: 0 8px; gap: 6px;
   z-index: 10000; overflow-x: auto;
 }
 
 #taskbar-start {
   height: 30px; padding: 0 12px;
-  background: linear-gradient(180deg, #440088, #220044);
-  border: 2px solid var(--accent1); box-shadow: 2px 2px 0 var(--accent2);
-  color: #fff; font-family: 'Press Start 2P', monospace; font-size: 7px;
+  background: var(--margin-red);
+  border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink);
+  color: #fff; font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 14px; font-weight: 700;
   letter-spacing: 0.04em; cursor: pointer;
   display: flex; align-items: center; gap: 6px; flex-shrink: 0;
   transition: background 0.1s;
 }
-#taskbar-start:hover { background: linear-gradient(180deg, #6600cc, #330066); }
+#taskbar-start:hover { background: #a01515; }
 #taskbar-start:active { transform: translate(1px,1px); }
-#taskbar-start .star { color: var(--accent3); font-size: 12px; }
+#taskbar-start .star { color: #ffff00; font-size: 14px; }
 
-.taskbar-sep { width: 2px; height: 28px; background: rgba(255,0,255,0.3); flex-shrink: 0; }
+.taskbar-sep { width: 1px; height: 28px; background: rgba(30,20,10,0.2); flex-shrink: 0; }
 
 .taskbar-btn {
   height: 30px; padding: 0 10px;
-  background: rgba(20,5,50,0.9); border: 2px solid rgba(255,0,255,0.4);
-  box-shadow: 1px 1px 0 rgba(0,255,255,0.2); color: var(--text);
-  font-family: 'Press Start 2P', monospace; font-size: 6px; letter-spacing: 0.03em;
+  background: var(--bg); border: 2px solid rgba(30,20,10,0.35);
+  box-shadow: 1px 1px 0 rgba(30,20,10,0.1); color: var(--ink2);
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 13px; font-weight: 600;
   cursor: pointer; display: flex; align-items: center; gap: 6px;
   transition: background 0.1s, border-color 0.1s;
   flex-shrink: 0; white-space: nowrap; max-width: 150px; overflow: hidden;
 }
-.taskbar-btn .tb-icon { font-size: 12px; color: var(--accent2); }
-.taskbar-btn:hover { background: rgba(80,0,160,0.9); border-color: var(--accent1); }
-.taskbar-btn.tb-active { background: rgba(50,0,120,0.95); border-color: var(--accent1); box-shadow: 0 0 8px rgba(255,0,255,0.4), 1px 1px 0 var(--accent2); color: var(--accent3); }
+.taskbar-btn .tb-icon { font-size: 14px; color: var(--blue-ink); display:flex; align-items:center; }
+.taskbar-btn .tb-icon .material-symbols-rounded { font-size: 14px !important; color: var(--blue-ink); }
+.taskbar-btn:hover { background: var(--paper); border-color: var(--ink); }
+.taskbar-btn.tb-active {
+  background: var(--paper); border-color: var(--ink);
+  box-shadow: 0 0 0 2px rgba(139,26,26,0.2), 1px 1px 0 var(--ink);
+  color: var(--margin-red);
+}
 
 #taskbar-clock {
   margin-left: auto; flex-shrink: 0;
   padding: 0 10px; height: 30px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
-  border: 2px solid rgba(0,255,255,0.3); background: rgba(0,0,20,0.8);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 1px;
+  border: 1px solid rgba(30,20,10,0.25); background: var(--paper);
 }
-#taskbar-time { font-family: 'Press Start 2P', monospace; font-size: 7px; color: var(--accent2); }
-#taskbar-date { font-family: 'VT323', monospace; font-size: 12px; color: var(--text-dim); }
+#taskbar-time { font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 14px; font-weight: 700; color: var(--ink); }
+#taskbar-date { font-family: 'Kalam', 'Be Vietnam Pro', cursive; font-size: 11px; color: var(--pencil); }
+
+/* Star canvas tint for sketchbook */
+#starCanvas { opacity: 0.15 !important; filter: sepia(1) hue-rotate(30deg) !important; }
 
 /* ============================================================
-   RESPONSIVE — full multi-breakpoint system
+   RESPONSIVE
    ============================================================ */
-
-/* ── LARGE DESKTOP  1200px+ ── nothing extra needed, base styles handle it */
-
-/* ── MEDIUM DESKTOP / LAPTOP  900px–1199px ── */
 @media (max-width: 1199px) {
   .container { max-width: 98vw; }
   .layout { grid-template-columns: 230px 1fr; gap: 14px; }
   .win { max-width: 90vw; }
 }
 
-/* ── TABLET LANDSCAPE  769px–899px ── */
 @media (max-width: 899px) {
   .layout { grid-template-columns: 200px 1fr; gap: 12px; }
-
-  .site-header h1 { font-size: 13px; }
-
+  .site-header h1 { font-size: 24px; }
   .action-cards { gap: 10px; }
-  .action-card  { width: 100px; padding: 10px 8px; }
+  .action-card  { width: 96px; padding: 10px 8px; }
   .action-card .material-symbols-rounded { font-size: 22px; margin-bottom: 7px; }
-  .action-card p { font-size: 6px !important; }
-
+  .action-card p { font-size: 12px !important; }
   .win { max-width: 92vw; }
   .win[style*="width:720"] { width: 92vw !important; }
   .work-grid { grid-template-columns: 1fr; gap: 18px; }
-
-  .taskbar-btn { max-width: 110px; font-size: 5px; }
+  .taskbar-btn { max-width: 110px; font-size: 12px; }
 }
 
-/* ── TABLET PORTRAIT + LARGE MOBILE  481px–768px ── */
 @media (max-width: 768px) {
   body { padding: 10px 10px 56px; }
-
-  /* stack sidebar above main */
-  .layout {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  .sidebar    { order: 1; }
-  .main-column{ order: 2; }
-
-  /* header */
+  .layout { grid-template-columns: 1fr; gap: 12px; }
+  .sidebar     { order: 1; }
+  .main-column { order: 2; }
   .site-header { padding: 14px 16px; }
-  .site-header h1 { font-size: clamp(9px, 3vw, 13px); letter-spacing: 0.02em; }
-  .site-header p  { font-size: 16px; }
+  .site-header h1 { font-size: clamp(18px, 4vw, 26px); }
   .site-header::before { display: none; }
-
-  /* sidebar */
   .sidebar-inner { padding: 18px 14px; }
-  .cv-name { font-size: 10px; }
+  .cv-name { font-size: 17px; }
   .avatar  { width: 68px; height: 68px; }
-
-  /* action cards — 2 per row */
-  .action-cards {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-  .action-card { width: 100%; padding: 12px 8px; }
-
-  /* windows — near full width, auto-positioned */
-  .win {
-    width: 94vw !important;
-    left: 3vw !important;
-    top: 40px !important;
-    min-width: unset;
-  }
-  .win.maximized {
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-  }
-  .win-title { font-size: 6px; }
+  .action-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .action-card  { width: 100%; padding: 12px 8px; }
+  .win { width: 94vw !important; left: 3vw !important; top: 40px !important; min-width: unset; }
+  .win.maximized { top: 0 !important; left: 0 !important; width: 100vw !important; }
+  .win-title { font-size: 12px; }
   .work-grid { grid-template-columns: 1fr; gap: 16px; }
   .draw-gallery { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
-
-  /* taskbar — shrink text */
   #taskbar { padding: 0 6px; gap: 4px; }
-  #taskbar-start { padding: 0 8px; font-size: 6px; }
-  #taskbar-start .star { font-size: 10px; }
-  .taskbar-btn { max-width: 90px; padding: 0 6px; font-size: 5px; }
-  .taskbar-btn .tb-icon { font-size: 10px; }
+  #taskbar-start { padding: 0 8px; font-size: 12px; }
+  .taskbar-btn { max-width: 90px; padding: 0 6px; font-size: 11px; }
+  .taskbar-btn .tb-icon { font-size: 12px; }
   #taskbar-date { display: none; }
-  #taskbar-time { font-size: 6px; }
+  #taskbar-time { font-size: 12px; }
 }
 
-/* ── MOBILE  320px–480px ── */
 @media (max-width: 480px) {
   body { padding: 8px 8px 52px; }
-
   .container { gap: 10px; }
-
-  /* header — single line pixel font */
   .site-header { padding: 12px; }
-  .site-header h1 {
-    font-size: clamp(7px, 2.8vw, 10px);
-    margin-bottom: 6px;
-  }
-  .site-header p { font-size: 14px; }
-
-  /* sidebar condensed */
+  .site-header h1 { font-size: clamp(16px, 4vw, 22px); margin-bottom: 6px; }
+  .site-header p  { font-size: 15px; }
   .sidebar-inner { padding: 14px 12px; }
-  .sidebar-inner::before { font-size: 6px; padding: 4px 8px; margin: -14px -12px 14px -12px; }
+  .sidebar-inner::before { font-size: 11px; padding: 4px 8px; margin: -14px -12px 14px -12px; }
   .avatar { width: 60px; height: 60px; margin-bottom: 10px; }
-  .cv-name { font-size: 9px; }
-  .cv-subtitle { font-size: 15px; }
-  .cv-section-title { font-size: 6px; }
-  .cv-intro { font-size: 15px; }
-  .cv-list li { font-size: 14px; }
-
-  /* content panels */
+  .cv-name { font-size: 15px; }
+  .cv-section-title { font-size: 12px; }
+  .cv-intro { font-size: 14px; }
+  .cv-list li { font-size: 13px; }
   .content { padding: 12px 12px; }
-  .content h3 { font-size: 7px; margin-bottom: 8px; }
-  .content p  { font-size: 16px; }
+  .content h3 { font-size: 15px; margin-bottom: 8px; }
+  .content p  { font-size: 15px; }
   .top-bar { padding: 6px 12px; }
-  .top-bar h2 { font-size: 7px; }
+  .top-bar h2 { font-size: 14px; }
   .top-bar::after { display: none; }
-
-  /* action cards — 2 per row, compact */
   .action-cards { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; }
-  .action-card { padding: 10px 6px; }
+  .action-card  { padding: 10px 6px; }
   .action-card .material-symbols-rounded { font-size: 20px; margin-bottom: 6px; }
-  .action-card p { font-size: 5px !important; }
-
-  /* about btn */
-  #aboutMoreBtn { font-size: 6px; padding: 5px 10px; }
-
-  /* footer */
+  #aboutMoreBtn { font-size: 12px; padding: 5px 10px; }
   .site-footer { padding: 10px; }
-  .site-footer p { font-size: 15px; }
+  .site-footer p { font-size: 16px; }
   .site-footer::before { display: none; }
-
-  /* windows */
-  .win {
-    width: 96vw !important;
-    left: 2vw !important;
-    top: 30px !important;
-  }
-  .win-titlebar { height: 24px; padding: 0 4px; gap: 5px; }
-  .win-title { font-size: 5px; }
-  .win-icon  { font-size: 11px; }
-  .win-btn   { width: 17px; height: 15px; font-size: 6px; }
+  .win { width: 96vw !important; left: 2vw !important; top: 30px !important; }
+  .win-titlebar { height: 26px; padding: 0 4px; gap: 5px; }
+  .win-title { font-size: 12px; }
+  .win-icon  { font-size: 12px; }
+  .win-btn   { width: 18px; height: 16px; font-size: 10px; }
   .win-menubar { padding: 1px 4px; }
-  .win-menu-item { font-size: 5px; padding: 2px 5px; }
+  .win-menu-item { font-size: 12px; padding: 2px 5px; }
   .win-addressbar { padding: 2px 6px; }
-  .win-addr-label { font-size: 5px; }
-  .win-addr-input { font-size: 10px; padding: 1px 4px; }
+  .win-addr-label { font-size: 12px; }
+  .win-addr-input { font-size: 12px; padding: 1px 4px; }
   .win-body { padding: 12px 10px; }
   .win-statusbar { padding: 2px 8px; }
-  .win-status-cell { font-size: 11px; padding: 0 6px; }
-
-  /* work window */
-  .work-notice { padding: 10px 12px; }
-  .work-notice strong { font-size: 7px; }
+  .win-status-cell { font-size: 12px; padding: 0 6px; }
+  .work-notice strong { font-size: 13px; }
   .work-grid { grid-template-columns: 1fr; gap: 14px; }
-  .work-grid h3 { font-size: 7px; }
+  .work-grid h3 { font-size: 14px; }
   .tag { font-size: 13px; padding: 4px 8px; }
-  .my-draw h2 { font-size: 7px; }
+  .my-draw h2 { font-size: 15px; }
   .draw-gallery { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .draw-gallery img { height: 90px; }
-
-  /* nav window */
   .icon-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .icon-item { padding: 10px 6px; font-size: 6px; gap: 5px; }
+  .icon-item { padding: 10px 6px; font-size: 12px; gap: 5px; }
   .icon-item .material-symbols-rounded { font-size: 18px; }
-  .icon-item span { font-size: 6px; }
-  .nav-notice { font-size: 14px; padding: 6px 8px; }
-
-  /* taskbar */
+  .icon-item span { font-size: 12px; }
+  .nav-notice { font-size: 13px; padding: 6px 8px; }
   #taskbar { height: 40px; }
-  #taskbar-start { padding: 0 7px; font-size: 5px; gap: 4px; }
-  #taskbar-start .star { font-size: 9px; }
-  .taskbar-btn { max-width: 70px; padding: 0 5px; font-size: 4px; height: 26px; }
+  #taskbar-start { padding: 0 7px; font-size: 12px; gap: 4px; }
+  .taskbar-btn { max-width: 70px; padding: 0 5px; font-size: 11px; height: 26px; }
   #taskbar-clock { padding: 0 7px; }
-  #taskbar-time  { font-size: 5px; }
+  #taskbar-time  { font-size: 12px; }
 }
 
-/* ── VERY SMALL  < 360px ── */
 @media (max-width: 359px) {
-  .site-header h1 { font-size: 7px; }
+  .site-header h1 { font-size: 15px; }
   .action-cards { grid-template-columns: repeat(2, 1fr); }
   .win { width: 98vw !important; left: 1vw !important; }
-  .taskbar-btn { display: none; } /* too cramped, hide labels */
-  #taskbar-start span:not(.star) { display: none; } /* just show ★ */
+  .taskbar-btn { display: none; }
+  #taskbar-start span:not(.star) { display: none; }
 }
