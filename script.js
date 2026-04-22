@@ -70,26 +70,7 @@ function playClose() { try { closeSound.currentTime = 0; closeSound.play(); } ca
 })();
 
 /* ── GLITCH HEADER ─────────────────────────────────────── */
-(function glitchType() {
-  const el = document.querySelector(".site-header h1");
-  if (!el) return;
-  const chars = "█▓▒░#@&%?!01";
-  let timeout;
-  el.addEventListener("mouseenter", () => {
-    const original = el.textContent;
-    let iter = 0;
-    clearInterval(timeout);
-    timeout = setInterval(() => {
-      el.textContent = original.split("").map((ch,i) => {
-        if (i < iter) return original[i];
-        if (ch===" ") return " ";
-        return chars[Math.floor(Math.random()*chars.length)];
-      }).join("");
-      iter += 1.5;
-      if (iter >= original.length) { el.textContent = original; clearInterval(timeout); }
-    }, 40);
-  });
-})();
+
 
 /* ============================================================
    WINDOW MANAGER
