@@ -1,4 +1,6 @@
 {
+  "siteTitle": "-- CHÀO MỪNG ĐẾN VỚI GÓC CỦA MÌNH --",
+  "siteSubtitle": "<- một trang nhỏ về bản thân mình ->",
   "profileLabel": "[ HỒ SƠ ]",
   "cvSubtitle": "và mình chỉ là sinh viên thôi",
   "cvIntro1": "xin chào, mình là Cindo\nmột lập trình viên + từ điển sống.",
@@ -30,6 +32,7 @@
   "winFollowTitle": "THEO DÕI — Mạng Xã Hội",
   "winProjectTitle": "DỰ ÁN — Các Dự Án",
   "winContactTitle": "LIÊN HỆ — Kết Nối",
+  "workNotice": "ĐANG NHẬN CÔNG VIỆC",
   "workNoticeText": "Mình nhận thiết kế web và phát triển web/app. :D",
   "toolsTitle": "// CÔNG CỤ",
   "devTitle": "// LẬP TRÌNH",
@@ -38,8 +41,9 @@
   "navNoticeFollow": "Theo dõi mình trên các nền tảng này.",
   "navNoticeProject": "Một số game nhỏ và dự án web của mình.",
   "navNoticeContact": "Liên hệ mình tại đây.",
+  "comingSoonText": "sắp có thêm dự án mới",
   "startBtn": "★ BẮT ĐẦU",
   "translateBtn": "Tiếng Việt",
-  "translateBtnEn": "English"
+  "translateBtnEn": "English",
+  "footerText": "CẢM ƠN BẠN ĐÃ GHÉ THĂM WEBSITE CỦA MÌNH :D"
 }
-

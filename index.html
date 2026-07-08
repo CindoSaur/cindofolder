@@ -1,9 +1,19 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>cindofolder</title>
+  <title>Cindo — Developer Portfolio &amp; CV</title>
+  <meta name="description" content="Cindo — sinh viên FPT Polytechnic, lập trình viên tự học. Portfolio game, website và các dự án cá nhân." />
+  <meta name="theme-color" content="#f5f0e8" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Cindo — Developer Portfolio & CV" />
+  <meta property="og:description" content="Portfolio cá nhân của Cindo: web, game và các dự án lập trình." />
+  <meta property="og:image" content="images/Interact.png" />
+
+  <link rel="icon" type="image/png" href="images/Interact.png" />
   <link rel="stylesheet" href="style.css" />
   <!-- Material Symbols: preconnect + load with display=block to ensure font renders -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -46,8 +56,9 @@
         <!-- SIDEBAR -->
         <aside class="sidebar">
           <div class="sidebar-inner sidebar-cv">
+            <span class="sidebar-tab" data-i18n="profileLabel">[ PROFILE ]</span>
             <div class="avatar">
-              <img src="images/Interact.png" alt="My avatar" />
+              <img src="images/Interact.png" alt="Ảnh đại diện của Cindo" width="480" height="480" loading="eager" />
             </div>
             <h1 class="cv-name">Cindo — Nghia</h1>
             <p class="cv-subtitle" data-i18n="cvSubtitle">and im just a student</p>
@@ -58,7 +69,11 @@
               <li data-i18n-list="cvList:1">create websites</li>
               <li data-i18n-list="cvList:2">create games</li>
             </ul>
-            <p class="cv-intro"><span data-i18n="cvContact">wanna yap? email me at</span> <a href="mailto:gglau223@gmail.com">gglau223@gmail.com</a> <a href="mailto:nghiavdm2007@gmail.com">nghiavdm2007@gmail.com</a></p>
+            <p class="cv-intro">
+              <span data-i18n="cvContact">wanna yap? email me at</span>
+              <a class="cv-email" data-user="gglau223" data-domain="gmail.com" href="#">gglau223@gmail.com</a>
+              <a class="cv-email" data-user="nghiavdm2007" data-domain="gmail.com" href="#">nghiavdm2007@gmail.com</a>
+            </p>
             <h2 class="cv-section-title" data-i18n="cvEducation">EDUCATION</h2>
             <p class="cv-edu-main">FPT Polytechnic</p>
             <p class="cv-edu-sub" data-i18n="cvEnrolled">enrolled 2025</p>
@@ -144,14 +159,14 @@
        ============================================================ -->
 
   <!-- WORK WINDOW (About More) -->
-  <div id="winWork" class="win" style="width:720px; top:80px; left:140px;">
+  <div id="winWork" class="win" role="dialog" aria-label="Work window" style="width:720px; top:80px; left:140px;">
     <div class="win-titlebar" data-win="winWork">
       <span class="win-icon"><span class="material-symbols-rounded" style="font-size:16px">computer</span></span>
       <span class="win-title" data-i18n="winWorkTitle"> — Cindo's Portfolio</span>
       <div class="win-controls">
-        <button class="win-btn win-minimize" data-action="minimize" data-win="winWork">_</button>
-        <button class="win-btn win-maximize" data-action="maximize" data-win="winWork">□</button>
-        <button class="win-btn win-close"    data-action="close"    data-win="winWork">✕</button>
+        <button class="win-btn win-minimize" data-action="minimize" data-win="winWork" aria-label="Minimize window">_</button>
+        <button class="win-btn win-maximize" data-action="maximize" data-win="winWork" aria-label="Maximize window">□</button>
+        <button class="win-btn win-close" data-action="close" data-win="winWork" aria-label="Close window">✕</button>
       </div>
     </div>
     <div class="win-menubar">
@@ -167,7 +182,9 @@
     <div class="win-body">
       <div class="work-notice">
         <strong data-i18n="workNotice">ACCEPTING WORK OFFERS</strong>
-        Work email: <a href="mailto:gglau223@gmail.com">gglau223@gmail.com</a> or <a href="mailto:nghiavdm2007@gmail.com">nghiavdm2007@gmail.com</a>
+        <span class="work-notice-email-label">Work email:</span>
+        <a class="cv-email" data-user="gglau223" data-domain="gmail.com" href="#">gglau223@gmail.com</a> or
+        <a class="cv-email" data-user="nghiavdm2007" data-domain="gmail.com" href="#">nghiavdm2007@gmail.com</a>
         <p data-i18n="workNoticeText">I do web design, and web/app development. :D</p>
       </div>
       <div class="work-grid">
@@ -176,7 +193,7 @@
           <div class="tag-container">
             <span class="tag">VS Code</span>
             <span class="tag">Eclipse</span>
-            <span class="tag">Kirita</span>
+            <span class="tag">Krita</span>
             <span class="tag">Unity 2D/3D</span>
             <span class="tag">SSMS</span>
             <span class="tag">Figma</span>
@@ -216,14 +233,14 @@
   </div>
 
   <!-- WEB WINDOW -->
-  <div id="winWeb" class="win" style="width:500px; top:100px; left:200px;">
+  <div id="winWeb" class="win" role="dialog" aria-label="Web window" style="width:500px; top:100px; left:200px;">
     <div class="win-titlebar" data-win="winWeb">
       <span class="win-icon"><span class="material-symbols-rounded" style="font-size:16px">language</span></span>
       <span class="win-title" data-i18n="winWebTitle">WEB — My Websites</span>
       <div class="win-controls">
-        <button class="win-btn win-minimize" data-action="minimize" data-win="winWeb">_</button>
-        <button class="win-btn win-maximize" data-action="maximize" data-win="winWeb">□</button>
-        <button class="win-btn win-close"    data-action="close"    data-win="winWeb">✕</button>
+        <button class="win-btn win-minimize" data-action="minimize" data-win="winWeb" aria-label="Minimize window">_</button>
+        <button class="win-btn win-maximize" data-action="maximize" data-win="winWeb" aria-label="Maximize window">□</button>
+        <button class="win-btn win-close" data-action="close" data-win="winWeb" aria-label="Close window">✕</button>
       </div>
     </div>
     <div class="win-menubar">
@@ -238,19 +255,23 @@
     <div class="win-body">
       <p class="nav-notice" data-i18n="navNoticeWeb">Places where you can see my websites and layouts.</p>
       <div class="icon-grid">
-        <div class="icon-item" data-link="https://cindosaur.github.io/cindodraw/">
+        <div class="icon-item" data-link="https://cindosaur.github.io/cindodraw/" tabindex="0" role="button">
           <span class="material-symbols-rounded">palette</span>
           <span>DRAW</span>
         </div>
-        <div class="icon-item" data-link="https://cindosaur.github.io/cindo-s-haiku-garden/">
+        <div class="icon-item" data-link="https://cindosaur.github.io/cindo-s-haiku-garden/" tabindex="0" role="button">
           <span class="material-symbols-rounded">eco</span>
           <span>HAIKU GARDEN</span>
+        </div>
+        <div class="icon-item" data-link="https://cindodevshelf.vercel.app/" tabindex="0" role="button">
+          <span class="material-symbols-rounded">inventory_2</span>
+          <span>DEVSHELF</span>
         </div>
       </div>
     </div>
     <div class="win-statusbar">
       <div class="win-status-left">
-        <span class="win-status-cell">2 items</span>
+        <span class="win-status-cell">3 items</span>
         <span class="win-status-cell">Ready</span>
       </div>
     </div>
@@ -258,14 +279,14 @@
   </div>
 
   <!-- FOLLOW WINDOW -->
-  <div id="winFollow" class="win" style="width:520px; top:120px; left:220px;">
+  <div id="winFollow" class="win" role="dialog" aria-label="Follow window" style="width:520px; top:120px; left:220px;">
     <div class="win-titlebar" data-win="winFollow">
       <span class="win-icon"><span class="material-symbols-rounded" style="font-size:16px">group</span></span>
       <span class="win-title" data-i18n="winFollowTitle">FOLLOW — Social Links</span>
       <div class="win-controls">
-        <button class="win-btn win-minimize" data-action="minimize" data-win="winFollow">_</button>
-        <button class="win-btn win-maximize" data-action="maximize" data-win="winFollow">□</button>
-        <button class="win-btn win-close"    data-action="close"    data-win="winFollow">✕</button>
+        <button class="win-btn win-minimize" data-action="minimize" data-win="winFollow" aria-label="Minimize window">_</button>
+        <button class="win-btn win-maximize" data-action="maximize" data-win="winFollow" aria-label="Maximize window">□</button>
+        <button class="win-btn win-close" data-action="close" data-win="winFollow" aria-label="Close window">✕</button>
       </div>
     </div>
     <div class="win-menubar">
@@ -280,19 +301,19 @@
     <div class="win-body">
       <p class="nav-notice" data-i18n="navNoticeFollow">Follow me on these platforms.</p>
       <div class="icon-grid">
-        <div class="icon-item" data-link="https://github.com/CindoSaur">
+        <div class="icon-item" data-link="https://github.com/CindoSaur" tabindex="0" role="button">
           <span class="material-symbols-rounded">code</span>
           <span>GITHUB</span>
         </div>
-        <div class="icon-item" data-link="https://x.com/cindo_ee">
+        <div class="icon-item" data-link="https://x.com/cindo_ee" tabindex="0" role="button">
           <span class="material-symbols-rounded">close</span>
           <span>TWITTER/X</span>
         </div>
-        <div class="icon-item" data-link="https://www.instagram.com/cind0_ee/">
+        <div class="icon-item" data-link="https://www.instagram.com/cind0_ee/" tabindex="0" role="button">
           <span class="material-symbols-rounded">photo_camera</span>
           <span>INSTAGRAM</span>
         </div>
-        <div class="icon-item" data-link="https://www.facebook.com/minh.nghia.946508">
+        <div class="icon-item" data-link="https://www.facebook.com/minh.nghia.946508" tabindex="0" role="button">
           <span class="material-symbols-rounded">thumb_up</span>
           <span>FACEBOOK</span>
         </div>
@@ -308,14 +329,14 @@
   </div>
 
   <!-- PROJECT WINDOW -->
-  <div id="winProject" class="win" style="width:500px; top:110px; left:210px;">
+  <div id="winProject" class="win" role="dialog" aria-label="Project window" style="width:500px; top:110px; left:210px;">
     <div class="win-titlebar" data-win="winProject">
       <span class="win-icon"><span class="material-symbols-rounded" style="font-size:16px">folder_open</span></span>
       <span class="win-title" data-i18n="winProjectTitle">PROJECT — My Projects</span>
       <div class="win-controls">
-        <button class="win-btn win-minimize" data-action="minimize" data-win="winProject">_</button>
-        <button class="win-btn win-maximize" data-action="maximize" data-win="winProject">□</button>
-        <button class="win-btn win-close"    data-action="close"    data-win="winProject">✕</button>
+        <button class="win-btn win-minimize" data-action="minimize" data-win="winProject" aria-label="Minimize window">_</button>
+        <button class="win-btn win-maximize" data-action="maximize" data-win="winProject" aria-label="Maximize window">□</button>
+        <button class="win-btn win-close" data-action="close" data-win="winProject" aria-label="Close window">✕</button>
       </div>
     </div>
     <div class="win-menubar">
@@ -331,19 +352,23 @@
     <div class="win-body">
       <p class="nav-notice" data-i18n="navNoticeProject">Some of my little games and web projects.</p>
        <div class="icon-grid">
-        <div class="icon-item" data-link="https://cindosaur.github.io/Pixel-Terminal/">
+        <div class="icon-item" data-link="https://cindosaur.github.io/Pixel-Terminal/" tabindex="0" role="button">
           <span class="material-symbols-rounded">sports_esports</span>
           <span>Pixel - Terminal</span>
         </div>
-                <div class="icon-item" data-link="https://cindosaur.github.io/Demo-web-FreshMarket/">
+                <div class="icon-item" data-link="https://cindosaur.github.io/Demo-web-FreshMarket/" tabindex="0" role="button">
           <span class="material-symbols-rounded">shopping_bag</span>
           <span>Fresh Market</span>
         </div>
       </div>
+      <div class="coming-soon-sticker">
+        <img src="images/CommingSoon.png" alt="" />
+        <span data-i18n="comingSoonText">more projects coming soon</span>
+      </div>
     </div>
     <div class="win-statusbar">
       <div class="win-status-left">
-        <span class="win-status-cell">3 items</span>
+        <span class="win-status-cell">2 items</span>
         <span class="win-status-cell">Ready</span>
       </div>
     </div>
@@ -351,14 +376,14 @@
   </div>
 
   <!-- CONTACT WINDOW -->
-  <div id="winContact" class="win" style="width:460px; top:130px; left:240px;">
+  <div id="winContact" class="win" role="dialog" aria-label="Contact window" style="width:460px; top:130px; left:240px;">
     <div class="win-titlebar" data-win="winContact">
       <span class="win-icon"><span class="material-symbols-rounded" style="font-size:16px">mail</span></span>
       <span class="win-title" data-i18n="winContactTitle">CONTACT — Get In Touch</span>
       <div class="win-controls">
-        <button class="win-btn win-minimize" data-action="minimize" data-win="winContact">_</button>
-        <button class="win-btn win-maximize" data-action="maximize" data-win="winContact">□</button>
-        <button class="win-btn win-close"    data-action="close"    data-win="winContact">✕</button>
+        <button class="win-btn win-minimize" data-action="minimize" data-win="winContact" aria-label="Minimize window">_</button>
+        <button class="win-btn win-maximize" data-action="maximize" data-win="winContact" aria-label="Maximize window">□</button>
+        <button class="win-btn win-close" data-action="close" data-win="winContact" aria-label="Close window">✕</button>
       </div>
     </div>
     <div class="win-menubar">
@@ -373,12 +398,12 @@
     <div class="win-body">
       <p class="nav-notice" data-i18n="navNoticeContact">Feel free to contact me here.</p>
       <div class="icon-grid">
-        <div class="icon-item" data-link="mailto:gglau223@gmail.com">
+        <div class="icon-item cv-email-item" data-user="gglau223" data-domain="gmail.com" tabindex="0" role="button">
           <span class="material-symbols-rounded">mail</span>
           <span>EMAIL</span>
         </div>
-        <div class="icon-item" data-link="https://discord.gg/hDdx2fcuNy">
-          <span class="material-symbols-rounded">forum</span>
+        <div class="icon-item" data-link="https://discord.gg/hDdx2fcuNy" tabindex="0" role="button">
+          <img class="icon-item-img" src="images/Discord.png" alt="" />
           <span>DISCORD</span>
         </div>
       </div>
@@ -393,14 +418,14 @@
   </div>
 
   <!-- IMAGE PREVIEW WINDOW -->
-  <div id="winPreview" class="win" style="width:560px; top:60px; left:180px;">
+  <div id="winPreview" class="win" role="dialog" aria-label="Image preview window" style="width:560px; top:60px; left:180px;">
     <div class="win-titlebar" data-win="winPreview">
       <span class="win-icon"><span class="material-symbols-rounded" style="font-size:16px">image</span></span>
       <span class="win-title">IMAGE VIEWER</span>
       <div class="win-controls">
-        <button class="win-btn win-minimize" data-action="minimize" data-win="winPreview">_</button>
-        <button class="win-btn win-maximize" data-action="maximize" data-win="winPreview">□</button>
-        <button class="win-btn win-close"    data-action="close"    data-win="winPreview">✕</button>
+        <button class="win-btn win-minimize" data-action="minimize" data-win="winPreview" aria-label="Minimize window">_</button>
+        <button class="win-btn win-maximize" data-action="maximize" data-win="winPreview" aria-label="Maximize window">□</button>
+        <button class="win-btn win-close" data-action="close" data-win="winPreview" aria-label="Close window">✕</button>
       </div>
     </div>
     <div class="win-menubar">
@@ -421,31 +446,17 @@
   </div>
 
   <div id="taskbar">
-    <button id="taskbar-start">
-      <span class="star">START</span>
+    <button id="taskbar-start" aria-label="Start menu">
+      <span class="star" data-i18n="startBtn">★ START</span>
     </button>
     <div class="taskbar-sep"></div>
     <div id="taskbar-btns"></div>
 
-    <button id="translateBtn" title="Switch language / Đổi ngôn ngữ" style="
-      margin-left: 6px;
-      height: 30px;
-      padding: 0 10px;
-      background: var(--blue-ink, #1a3a6b);
-      border: 2px solid var(--ink, #1a1410);
-      box-shadow: 2px 2px 0 var(--ink, #1a1410);
-      color: #fff;
-      font-family: 'Caveat', cursive;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      flex-shrink: 0;
-      transition: background 0.15s;
-    ">Tiếng Việt</button>
-        <div class="taskbar-sep" style="margin-left:auto;"></div>
+    <button id="printBtn" title="In / Xuất CV — Print / Export CV" aria-label="Print CV">
+      <span class="material-symbols-rounded" style="font-size:16px">print</span>
+    </button>
+    <button id="translateBtn" title="Switch language / Đổi ngôn ngữ" aria-label="Switch language">Tiếng Việt</button>
+    <div class="taskbar-sep" style="margin-left:auto;"></div>
     <div id="taskbar-clock">
       <span id="taskbar-time">00:00</span>
       <span id="taskbar-date">01/01</span>

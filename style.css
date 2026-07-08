@@ -56,6 +56,25 @@ body.vi-active .my-draw h2 {
   --rule:        rgba(100,120,200,0.18);
   --shadow:      rgba(30,20,10,0.12);
   --sketch:      rgba(30,20,10,0.08);
+  --focus-ring:  #1a3a6b;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visible keyboard focus everywhere (accessibility) */
+a:focus-visible, button:focus-visible, input:focus-visible,
+.action-card:focus-visible, .icon-item:focus-visible, [tabindex]:focus-visible {
+  outline: 2.5px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 *, *::before, *::after {
@@ -117,35 +136,14 @@ body {
   border: 2px solid var(--ink);
   box-shadow:
     3px 3px 0 var(--ink),
-    -1px -1px 0 rgba(30,20,10,0.15),
-    inset 0 0 40px rgba(200,180,140,0.15);
-  padding: 20px 24px; text-align: center;
+    inset 0 0 40px rgba(200,180,140,0.12);
+  padding: 22px 24px; text-align: center;
   position: relative; overflow: hidden;
-  /* slight tilt for hand-drawn feel */
-  transform: rotate(-0.3deg);
+  /* subtle tilt for hand-drawn feel, kept restrained for a cleaner look */
+  transform: rotate(-0.15deg);
   animation: headerSlide 0.5s ease-out both;
 }
-@keyframes headerSlide { from { transform: translateY(-20px) rotate(-0.3deg); opacity: 0; } to { transform: translateY(0) rotate(-0.3deg); opacity: 1; } }
-
-/* Tape decoration on header */
-.site-header::before {
-  content: '';
-  position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
-  width: 60px; height: 18px;
-  background: rgba(255,220,100,0.55);
-  border: 1px solid rgba(180,150,50,0.4);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-}
-/* Corner fold */
-.site-header::after {
-  content: '';
-  position: absolute; bottom: 0; right: 0;
-  width: 0; height: 0;
-  border-style: solid;
-  border-width: 0 0 18px 18px;
-  border-color: transparent transparent var(--bg2) transparent;
-  filter: drop-shadow(-1px -1px 1px rgba(0,0,0,0.15));
-}
+@keyframes headerSlide { from { transform: translateY(-16px) rotate(-0.15deg); opacity: 0; } to { transform: translateY(0) rotate(-0.15deg); opacity: 1; } }
 
 .site-header h1 {
   font-family: 'Caveat', 'Be Vietnam Pro', cursive;
@@ -174,17 +172,16 @@ body {
   width: 100%;
   background: var(--paper);
   border: 2px solid var(--ink);
-  box-shadow: 4px 4px 0 var(--ink), -1px -1px 0 rgba(30,20,10,0.1);
+  box-shadow: 4px 4px 0 var(--ink);
   padding: 22px 18px;
-  transform: rotate(0.4deg);
+  transform: rotate(0.15deg);
   animation: sideSlide 0.55s 0.1s ease-out both;
   position: relative;
 }
-@keyframes sideSlide { from { transform: translateX(-24px) rotate(0.4deg); opacity: 0; } to { transform: translateX(0) rotate(0.4deg); opacity: 1; } }
+@keyframes sideSlide { from { transform: translateX(-20px) rotate(0.15deg); opacity: 0; } to { transform: translateX(0) rotate(0.15deg); opacity: 1; } }
 
-/* Profile label like a sticky note tab */
-.sidebar-inner::before {
-  content: '[ PROFILE ]';
+/* Profile label like a sticky note tab (real element, so it can be translated) */
+.sidebar-tab {
   display: block;
   background: #f5e642;
   color: var(--ink2);
@@ -192,27 +189,16 @@ body {
   padding: 5px 10px; margin: -22px -18px 18px -18px;
   letter-spacing: 0.06em;
   border-bottom: 2px solid var(--ink);
-  box-shadow: 0 2px 4px var(--shadow);
 }
 
 .avatar {
-  width: 80px; height: 80px;
+  width: 84px; height: 84px;
+  border-radius: 50%;
   border: 2px solid var(--ink);
   box-shadow: 3px 3px 0 var(--ink);
   overflow: hidden; margin: 0 auto 14px; position: relative;
-  transform: rotate(-2deg);
 }
-/* Photo corner tabs */
-.avatar::before, .avatar::after {
-  content: '';
-  position: absolute;
-  width: 14px; height: 10px;
-  background: rgba(255,220,100,0.7);
-  border: 1px solid rgba(180,150,50,0.5);
-}
-.avatar::before { top: -4px; left: -3px; transform: rotate(-8deg); }
-.avatar::after  { bottom: -4px; right: -3px; transform: rotate(5deg); }
-.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; filter: contrast(1.05) sepia(0.08); }
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; filter: contrast(1.05) sepia(0.05); }
 
 .cv-name {
   font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 20px; font-weight: 700;
@@ -283,23 +269,12 @@ body {
   font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 16px; font-weight: 700;
   color: var(--ink); letter-spacing: 0.05em;
 }
-/* Paper clip decoration */
-.top-bar::after {
-  content: '📎';
-  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-  font-size: 16px; opacity: 0.7;
-}
 
 .content {
   background: var(--paper);
   border: 2px solid var(--ink);
-  box-shadow: 4px 4px 0 var(--ink), -1px -1px 0 rgba(30,20,10,0.08);
-  padding: 18px 20px; position: relative;
-  transition: box-shadow 0.15s, transform 0.15s;
-}
-.content:hover {
-  box-shadow: 5px 5px 0 var(--ink), -1px -1px 0 rgba(30,20,10,0.1);
-  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+  padding: 20px 22px; position: relative;
 }
 .content h3 {
   font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 17px; font-weight: 700;
@@ -308,8 +283,17 @@ body {
   text-decoration-color: var(--blue-ink); text-underline-offset: 2px;
 }
 .content p {
-  font-size: 16px; color: var(--ink2); line-height: 1.65; margin-bottom: 8px;
+  font-size: 16px; color: var(--ink2); line-height: 1.7; margin-bottom: 10px;
+  max-width: 68ch;
 }
+
+/* Email links — obfuscated + built by JS, styled consistently */
+.cv-email {
+  color: var(--blue-ink); text-decoration: underline; text-decoration-style: dotted;
+  cursor: pointer;
+}
+.cv-email:hover { color: var(--margin-red); }
+.work-notice-email-label { color: var(--ink2); }
 
 /* ACTION CARDS */
 .action-cards { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 16px; }
@@ -321,28 +305,14 @@ body {
   box-shadow: 3px 3px 0 var(--ink);
   padding: 14px 10px 12px;
   cursor: pointer; position: relative; overflow: hidden;
-  opacity: 0; transform: translateY(16px) rotate(-1deg);
+  opacity: 0; transform: translateY(12px);
   transition: opacity 0.35s ease, transform 0.35s ease, box-shadow 0.12s;
 }
-.action-card:nth-child(2) { transform: translateY(16px) rotate(1deg); }
-.action-card:nth-child(3) { transform: translateY(16px) rotate(-0.5deg); }
-.action-card:nth-child(4) { transform: translateY(16px) rotate(0.8deg); }
 
-.action-card.visible { opacity: 1; transform: translateY(0) rotate(-1deg); }
-.action-card:nth-child(2).visible { transform: translateY(0) rotate(1deg); }
-.action-card:nth-child(3).visible { transform: translateY(0) rotate(-0.5deg); }
-.action-card:nth-child(4).visible { transform: translateY(0) rotate(0.8deg); }
+.action-card.visible { opacity: 1; transform: translateY(0); }
 
-/* Tape on action cards */
-.action-card::before {
-  content: '';
-  position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
-  width: 30px; height: 12px;
-  background: rgba(255,220,100,0.6);
-  border: 1px solid rgba(180,150,50,0.35);
-}
-.action-card:hover { transform: translate(-3px,-3px) rotate(0deg) !important; box-shadow: 6px 6px 0 var(--ink); }
-.action-card:active { transform: translate(1px,1px) rotate(0deg) !important; box-shadow: 2px 2px 0 var(--ink); }
+.action-card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--ink); }
+.action-card:active { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--ink); }
 .action-card .material-symbols-rounded {
   font-size: 26px; color: var(--blue-ink); margin-bottom: 8px; display: block;
 }
@@ -373,13 +343,6 @@ body {
   box-shadow: 4px 4px 0 var(--ink);
   padding: 14px 20px; text-align: center;
 }
-/* Doodle line decoration */
-.site-footer::before {
-  content: '~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~';
-  display: block; color: rgba(30,20,10,0.2); font-size: 10px;
-  letter-spacing: 2px; margin-bottom: 8px; overflow: hidden;
-  font-family: 'Caveat', 'Be Vietnam Pro', cursive;
-}
 .site-footer p { font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 18px; color: var(--ink); font-weight: 600; }
 
 @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
@@ -394,31 +357,28 @@ body {
   min-width: 320px; min-height: 200px;
   background: var(--paper);
   border: 2px solid var(--ink);
-  box-shadow: 5px 5px 0 var(--ink), -1px -1px 0 rgba(30,20,10,0.15);
+  box-shadow: 5px 5px 0 var(--ink);
   display: none; flex-direction: column;
   z-index: 100; overflow: hidden;
-  /* slight random tilt — feels like paper on a desk */
-  transform: rotate(-0.5deg);
 }
-.win:nth-child(even) { transform: rotate(0.4deg); }
 
 .win.open {
   display: flex;
-  animation: winOpen 0.2s cubic-bezier(0.17,0.67,0.5,1.28) both;
+  animation: winOpen 0.18s cubic-bezier(0.17,0.67,0.5,1.15) both;
 }
 @keyframes winOpen {
-  from { transform: scale(0.88) translateY(8px) rotate(-1deg); opacity: 0; }
-  to   { transform: scale(1) translateY(0) rotate(-0.5deg); opacity: 1; }
+  from { transform: scale(0.94) translateY(6px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
 }
 .win.closing { animation: winClose 0.15s ease forwards !important; }
 @keyframes winClose {
   from { transform: scale(1); opacity: 1; }
-  to   { transform: scale(0.88) translateY(8px); opacity: 0; }
+  to   { transform: scale(0.94) translateY(6px); opacity: 0; }
 }
 
 .win.active-window {
   border-color: var(--ink);
-  box-shadow: 5px 5px 0 var(--ink), -1px -1px 0 rgba(30,20,10,0.15);
+  box-shadow: 5px 5px 0 var(--ink);
 }
 .win.inactive-window {
   border-color: rgba(30,20,10,0.3);
@@ -573,12 +533,9 @@ body {
   cursor: pointer;
   transition: transform 0.12s, box-shadow 0.12s;
   filter: sepia(0.05) contrast(1.05);
-  transform: rotate(-1deg);
 }
-.draw-gallery img:nth-child(2) { transform: rotate(1.5deg); }
-.draw-gallery img:nth-child(3) { transform: rotate(-0.5deg); }
 .draw-gallery img:hover {
-  transform: translate(-3px,-3px) rotate(0deg) scale(1.04);
+  transform: translate(-3px,-3px) scale(1.03);
   box-shadow: 6px 6px 0 var(--ink);
 }
 
@@ -597,16 +554,28 @@ body {
   cursor: pointer; display: flex; flex-direction: column;
   align-items: center; gap: 8px; text-align: center; line-height: 1.4;
   transition: transform 0.1s, box-shadow 0.1s; position: relative;
-  transform: rotate(-0.5deg);
 }
-.icon-item:nth-child(even) { transform: rotate(0.5deg); }
 .icon-item:hover {
-  transform: translate(-2px,-2px) rotate(0deg) !important;
+  transform: translate(-2px,-2px);
   box-shadow: 5px 5px 0 var(--ink); color: var(--margin-red);
 }
-.icon-item:active { transform: translate(1px,1px) !important; box-shadow: 1px 1px 0 var(--ink); }
+.icon-item:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--ink); }
 .icon-item .material-symbols-rounded { font-size: 24px; color: var(--blue-ink); }
+.icon-item-img { width: 24px; height: 24px; object-fit: contain; }
 .icon-item span { font-size: 13px; }
+
+/* Coming soon sticker (Project window) */
+.coming-soon-sticker {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 16px; padding: 8px 10px;
+  border: 2px dashed rgba(30,20,10,0.35);
+  background: rgba(26,58,107,0.04);
+}
+.coming-soon-sticker img { width: 36px; height: 36px; object-fit: contain; flex-shrink: 0; }
+.coming-soon-sticker span {
+  font-family: 'Kalam', 'Be Vietnam Pro', cursive; font-size: 13px; font-style: italic;
+  color: var(--pencil);
+}
 
 /* Image preview */
 #previewImg {
@@ -659,6 +628,18 @@ body {
   color: var(--margin-red);
 }
 
+#printBtn, #translateBtn {
+  height: 30px; padding: 0 10px; margin-left: 6px;
+  background: var(--blue-ink); border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink); color: #fff;
+  font-family: 'Caveat', 'Be Vietnam Pro', cursive; font-size: 13px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; gap: 5px;
+  flex-shrink: 0; transition: background 0.15s;
+}
+#printBtn:hover, #translateBtn:hover { background: #14304f; }
+#printBtn:active, #translateBtn:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--ink); }
+#printBtn .material-symbols-rounded { font-size: 16px !important; color: #fff; }
+
 #taskbar-clock {
   margin-left: auto; flex-shrink: 0;
   padding: 0 10px; height: 30px;
@@ -701,7 +682,6 @@ body {
   .main-column { order: 2; }
   .site-header { padding: 14px 16px; }
   .site-header h1 { font-size: clamp(18px, 4vw, 26px); }
-  .site-header::before { display: none; }
   .sidebar-inner { padding: 18px 14px; }
   .cv-name { font-size: 17px; }
   .avatar  { width: 68px; height: 68px; }
@@ -745,7 +725,6 @@ body {
   #aboutMoreBtn { font-size: 12px; padding: 5px 10px; }
   .site-footer { padding: 10px; }
   .site-footer p { font-size: 16px; }
-  .site-footer::before { display: none; }
   .win { width: 96vw !important; left: 2vw !important; top: 30px !important; }
   .win-titlebar { height: 26px; padding: 0 4px; gap: 5px; }
   .win-title { font-size: 12px; }
@@ -784,4 +763,25 @@ body {
   .win { width: 98vw !important; left: 1vw !important; }
   .taskbar-btn { display: none; }
   #taskbar-start span:not(.star) { display: none; }
+  #printBtn span:not(.material-symbols-rounded) { display: none; }
+  #translateBtn { font-size: 11px; padding: 0 6px; }
+}
+
+/* ============================================================
+   PRINT STYLES — clean CV output via the "Print CV" button
+   ============================================================ */
+@media print {
+  #starCanvas, #taskbar, .win, body::before, body::after,
+  .content { box-shadow: none !important; }
+  #taskbar, #starCanvas, .win { display: none !important; }
+  body { background: #fff; padding: 0; }
+  .sidebar-inner, .content, .site-header, .site-footer {
+    box-shadow: none !important; border-color: #000 !important;
+    break-inside: avoid;
+  }
+  .layout { grid-template-columns: 240px 1fr; }
+  .action-cards { display: none; }
+  a { color: inherit !important; text-decoration: none !important; }
+  .top-bar:nth-of-type(2) ~ .content .action-cards,
+  #winWork, #winWeb, #winFollow, #winProject, #winContact, #winPreview { display: none !important; }
 }

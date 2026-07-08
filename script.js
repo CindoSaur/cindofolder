@@ -13,23 +13,26 @@ function playOpen()  { try { openSound.currentTime  = 0; openSound.play();  } ca
 function playClose() { try { closeSound.currentTime = 0; closeSound.play(); } catch(e){} }
 
 /* ── STAR CANVAS ───────────────────────────────────────── */
+/* Retheme: muted ink/pencil dots instead of neon Y2K colors,
+   so the ambient background matches the sketchbook palette. */
 (function initStars() {
   const canvas = document.getElementById("starCanvas");
   if (!canvas) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const ctx = canvas.getContext("2d");
-  const COLORS = ["#ff00ff","#00ffff","#ffff00","#ffffff","#ff88ff"];
+  const COLORS = ["#1a3a6b","#8b1a1a","#4a3f35","#1a5a2a"];
   let stars = [], W, H, frame = 0;
 
   function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
   function createStar() {
-    return { x: Math.random()*W, y: Math.random()*H, size: Math.random()<0.6?2:4,
+    return { x: Math.random()*W, y: Math.random()*H, size: Math.random()<0.7?1.5:2.5,
              color: COLORS[Math.floor(Math.random()*COLORS.length)],
-             alpha: Math.random(), speed: 0.005+Math.random()*0.01, phase: Math.random()*Math.PI*2 };
+             alpha: Math.random(), speed: 0.004+Math.random()*0.008, phase: Math.random()*Math.PI*2 };
   }
   function draw() {
     ctx.clearRect(0,0,W,H); frame++;
     stars.forEach(s => {
-      s.alpha = 0.2+0.8*Math.abs(Math.sin(s.phase+frame*s.speed));
+      s.alpha = 0.15+0.5*Math.abs(Math.sin(s.phase+frame*s.speed));
       ctx.globalAlpha = s.alpha; ctx.fillStyle = s.color;
       ctx.fillRect(Math.floor(s.x), Math.floor(s.y), s.size, s.size);
     });
@@ -37,25 +40,31 @@ function playClose() { try { closeSound.currentTime = 0; closeSound.play(); } ca
     requestAnimationFrame(draw);
   }
   resize();
-  for (let i=0;i<80;i++) stars.push(createStar());
+  for (let i=0;i<50;i++) stars.push(createStar());
   draw();
-  window.addEventListener("resize", () => { resize(); stars = []; for(let i=0;i<80;i++) stars.push(createStar()); });
+  window.addEventListener("resize", () => { resize(); stars = []; for(let i=0;i<50;i++) stars.push(createStar()); });
 })();
 
-/* ── PIXEL CLICK BURST ─────────────────────────────────── */
+/* ── PENCIL CLICK BURST ────────────────────────────────── */
+/* Retheme: ink-colored, and only fires on real interactive
+   elements (buttons, links, cards) instead of every click on
+   the page — calmer, more intentional for a CV site. */
 (function initBurst() {
-  const COLORS = ["#ff00ff","#00ffff","#ffff00","#ff4488","#00ff88"];
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const COLORS = ["#1a3a6b","#8b1a1a","#1a5a2a","#4a3f35"];
   document.addEventListener("click", (e) => {
-    for (let i=0; i<8; i++) {
+    const target = e.target.closest("button, a, .action-card, .icon-item, .win-btn");
+    if (!target) return;
+    for (let i=0; i<6; i++) {
       const px = document.createElement("div");
-      const angle = (i/8)*360;
-      const dist  = 28 + Math.random()*18;
-      const size  = Math.random()<0.5 ? 4 : 6;
+      const angle = (i/6)*360;
+      const dist  = 22 + Math.random()*14;
+      const size  = Math.random()<0.5 ? 3 : 5;
       Object.assign(px.style, {
         position:"fixed", left:e.clientX+"px", top:e.clientY+"px",
         width:size+"px", height:size+"px",
         background: COLORS[Math.floor(Math.random()*COLORS.length)],
-        pointerEvents:"none", zIndex:"9997", transition:"all 0.45s ease-out",
+        pointerEvents:"none", zIndex:"9997", transition:"all 0.4s ease-out",
         transform:"translate(-50%,-50%)",
       });
       document.body.appendChild(px);
@@ -64,7 +73,7 @@ function playClose() { try { closeSound.currentTime = 0; closeSound.play(); } ca
         px.style.transform = `translate(calc(-50% + ${Math.cos(rad)*dist}px), calc(-50% + ${Math.sin(rad)*dist}px))`;
         px.style.opacity = "0";
       });
-      setTimeout(() => px.remove(), 480);
+      setTimeout(() => px.remove(), 430);
     }
   });
 })();
@@ -366,13 +375,44 @@ document.querySelectorAll(".draw-gallery img[data-preview]").forEach(img => {
   });
 });
 
-// icon-item links
+// icon-item links (mouse + keyboard)
+function activateIconItem(item) {
+  if (item.classList.contains("cv-email-item")) {
+    const user = item.dataset.user, domain = item.dataset.domain;
+    if (user && domain) window.location.href = `mailto:${user}@${domain}`;
+    return;
+  }
+  const link = item.dataset.link;
+  if (link && link !== "#") window.open(link, "_blank", "noopener,noreferrer");
+}
 document.addEventListener("click", (e) => {
   const item = e.target.closest(".icon-item");
   if (!item) return;
-  const link = item.dataset.link;
-  if (link && link !== "#") window.open(link, "_blank");
+  activateIconItem(item);
 });
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const item = e.target.closest(".icon-item");
+  if (!item) return;
+  e.preventDefault();
+  activateIconItem(item);
+});
+
+/* ── EMAIL PROTECTION ─────────────────────────────────────
+   Builds mailto hrefs from data-user/data-domain at runtime
+   instead of embedding raw addresses in the HTML source, to
+   reduce basic scraping by spam bots. ──────────────────── */
+document.querySelectorAll("a.cv-email[data-user][data-domain]").forEach(a => {
+  const addr = `${a.dataset.user}@${a.dataset.domain}`;
+  a.href = `mailto:${addr}`;
+  a.textContent = addr;
+});
+
+/* ── PRINT / EXPORT CV ────────────────────────────────────── */
+const printBtn = document.getElementById("printBtn");
+if (printBtn) {
+  printBtn.addEventListener("click", () => window.print());
+}
 
 /* ── ESC → close top window ───────────────────────────── */
 document.addEventListener("keydown", (e) => {
@@ -468,6 +508,7 @@ if (translateBtn) {
     const t = await loadTranslations();
     currentLang = currentLang === "en" ? "vi" : "en";
     applyTranslations(currentLang, t);
+    document.documentElement.lang = currentLang;
     // Toggle Vietnamese font class on body
     if (currentLang === "vi") {
       document.body.classList.add("vi-active");
